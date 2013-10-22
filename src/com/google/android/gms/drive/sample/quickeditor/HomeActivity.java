@@ -19,21 +19,19 @@ package com.google.android.gms.drive.sample.quickeditor;
 import com.google.android.gms.Batch;
 import com.google.android.gms.Batch.BatchCallback;
 import com.google.android.gms.PendingResult;
-import com.google.android.gms.Status;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.drive.Contents;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.ContentsResult;
 import com.google.android.gms.drive.DriveFile;
-import com.google.android.gms.drive.DriveFile.OnContentsClosedCallback;
 import com.google.android.gms.drive.DriveFile.OnContentsOpenedCallback;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource.MetadataResult;
 import com.google.android.gms.drive.DriveResource.OnMetadataRetrievedCallback;
-import com.google.android.gms.drive.DriveResource.OnMetadataUpdatedCallback;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.android.gms.drive.OpenFileDialogBuilder;
+import com.google.android.gms.drive.sample.quickeditor.tasks.EditDriveFileAsyncTask;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,12 +51,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class MainActivity extends BaseDriveActivity {
+public class HomeActivity extends BaseDriveActivity {
 
   private static final String TAG = "MainActivity";
 
   private static final int REQUEST_CODE_CREATOR = NEXT_AVAILABLE_REQUEST_CODE;
-  private static final int REQUEST_CODE_PICKER = NEXT_AVAILABLE_REQUEST_CODE + 1;
+  private static final int REQUEST_CODE_OPENER = NEXT_AVAILABLE_REQUEST_CODE + 1;
 
   private static final String MIME_TYPE_TEXT = "text/plain";
 
@@ -66,7 +64,7 @@ public class MainActivity extends BaseDriveActivity {
   private EditText mContentsEditText;
   private Button mSaveButton;
 
-  private DriveFile mCurrentDriveFile;
+  private DriveId mCurrentDriveId;
   private Metadata mMetadata;
   private Contents mContents;
 
@@ -124,7 +122,7 @@ public class MainActivity extends BaseDriveActivity {
         Intent i = Drive.DriveApi.newOpenFileDialogBuilder(mGoogleApiClient)
             .setMimeType(new String[]{ MIME_TYPE_TEXT })
             .build();
-        startActivityForResult(i, REQUEST_CODE_PICKER);
+        startActivityForResult(i, REQUEST_CODE_OPENER);
         break;
     }
     return super.onMenuItemSelected(featureId, item);
@@ -133,11 +131,11 @@ public class MainActivity extends BaseDriveActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-      case REQUEST_CODE_PICKER:
+      case REQUEST_CODE_OPENER:
       case REQUEST_CODE_CREATOR:
         if (resultCode == RESULT_OK) {
-          mCurrentDriveFile = Drive.DriveApi.getFile(
-              (DriveId) data.getParcelableExtra(OpenFileDialogBuilder.EXTRA_RESPONSE_DRIVE_ID));
+          mCurrentDriveId =
+              (DriveId) data.getParcelableExtra(OpenFileDialogBuilder.EXTRA_RESPONSE_DRIVE_ID);
           refresh();
           // TODO: don't reload on create
           get();
@@ -150,7 +148,7 @@ public class MainActivity extends BaseDriveActivity {
 
   private void refresh() {
     Log.d(TAG, "Refreshing...");
-    if (mCurrentDriveFile == null) {
+    if (mCurrentDriveId == null) {
       mSaveButton.setEnabled(false);
       return;
     }
@@ -159,16 +157,17 @@ public class MainActivity extends BaseDriveActivity {
 
   private void get() {
     Log.d(TAG, "Retrieving...");
+    DriveFile file = Drive.DriveApi.getFile(mCurrentDriveId);
     final PendingResult<MetadataResult, OnMetadataRetrievedCallback> metadataResult =
-        mCurrentDriveFile.getMetadata(mGoogleApiClient);
+        file.getMetadata(mGoogleApiClient);
     final PendingResult<ContentsResult, OnContentsOpenedCallback> contentsResult =
-        mCurrentDriveFile.openContents(mGoogleApiClient, DriveFile.MODE_READ_WRITE, null);
+        file.openContents(mGoogleApiClient, DriveFile.MODE_READ_WRITE, null);
     new Batch(metadataResult, contentsResult).addResultCallback(new BatchCallback() {
       @Override
       public void onBatchComplete() {
         if (!metadataResult.get().getStatus().isSuccess()
             || !contentsResult.get().getStatus().isSuccess()) {
-          showToast(0);
+          showToast(0); // todo: message here
           return;
         }
         mMetadata = metadataResult.get().getMetadata();
@@ -182,30 +181,26 @@ public class MainActivity extends BaseDriveActivity {
 
   private void save() {
     Log.d(TAG, "Saving...");
-    if (mCurrentDriveFile == null) {
+    if (mCurrentDriveId == null) {
       return;
     }
-    // TODO: open file first
-    MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-        .setMimeType(MIME_TYPE_TEXT)
-        .setTitle(mTitleEditText.getText().toString())
-        .build();
-    writeContents(mContents, mContentsEditText.getText().toString());
-    final PendingResult<MetadataResult, OnMetadataUpdatedCallback> metadataResult =
-        mCurrentDriveFile.updateMetadata(mGoogleApiClient, changeSet);
-    final PendingResult<Status, OnContentsClosedCallback> contentsResult =
-        mCurrentDriveFile.closeContents(mGoogleApiClient, mContents);
-    new Batch(metadataResult, contentsResult).addResultCallback(new BatchCallback() {
+
+    new EditDriveFileAsyncTask(mGoogleApiClient) {
       @Override
-      public void onBatchComplete() {
-        if (!metadataResult.get().getStatus().isSuccess()
-            || !contentsResult.get().getStatus().isSuccess()) {
-          showToast(R.string.msg_errsaving);
-          return;
-        }
+      public Changes edit(Contents contents) {
+        MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
+            .setTitle(mTitleEditText.getText().toString())
+            .build();
+        writeContents(contents, mContentsEditText.getText().toString());
+        return new Changes(metadataChangeSet, contents);
+      }
+
+      @Override
+      protected void onPostExecute(com.google.android.gms.Status status) {
+        // TODO: handle error, fix com.google.android.gms.Status ugliness.
         showToast(R.string.msg_saved);
       }
-    });
+    }.execute(mCurrentDriveId);
   }
 
   private void showToast(int id) {

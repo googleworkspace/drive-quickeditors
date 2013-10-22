@@ -23,41 +23,75 @@ import com.google.android.gms.drive.Drive;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.PendingIntent.CanceledException;
 import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.util.Log;
 
 /**
- * An abstract activity that handles auth and connection to the Drive services.
+ * An abstract activity that handles authorization and
+ * connection to the Drive services.
+ *
+ * @author jbd@google.com (Burcu Dogan)
  */
 public abstract class BaseDriveActivity extends Activity
     implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   private static final String TAG = "BaseDriveActivity";
 
-  protected static final String EXTRA_ACCOUNT_NAME = "accountName";
+  /**
+   * Extra for account name.
+   */
+  protected static final String EXTRA_ACCOUNT_NAME = "account_name";
 
+  /**
+   * Request code for auto gmscore error resolution.
+   */
   protected static final int REQUEST_CODE_RESOLUTION = 1;
 
+  /**
+   * Next available request code.
+   */
   protected static final int NEXT_AVAILABLE_REQUEST_CODE = 2;
 
-  // This variable should only be accessed from the UI thread.
+  /**
+   * Google API client.
+   */
   protected GoogleApiClient mGoogleApiClient;
 
+  /**
+   * Selected account name to authorize the app for and authenticate the client with.
+   */
   protected String mAccountName;
 
+  /**
+   * Called on activity creation. Handlers {@code EXTRA_ACCOUNT_NAME} for handle
+   * if there is one set. Otherwise, looks for the first Google account on the
+   * device and automatically picks it for client connections.
+   */
   @Override
-  protected void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
-    if (bundle != null) {
-      mAccountName = bundle.getString(EXTRA_ACCOUNT_NAME);
+  protected void onCreate(Bundle b) {
+    super.onCreate(b);
+    if (b != null) {
+      mAccountName = b.getString(EXTRA_ACCOUNT_NAME);
     }
     if (mAccountName == null) {
       mAccountName = getIntent().getStringExtra(EXTRA_ACCOUNT_NAME);
     }
+
+    if (mAccountName == null) {
+      Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
+      if (accounts.length == 0) {
+        Log.d(TAG, "Must have a Google account installed");
+        return;
+      }
+      mAccountName = accounts[0].name;
+    }
   }
 
+  /**
+   * Saves the activity state.
+   */
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
@@ -73,16 +107,6 @@ public abstract class BaseDriveActivity extends Activity
   @Override
   protected void onResume() {
     super.onResume();
-    Log.i(TAG, "Connecting with " + mAccountName);
-    if (mAccountName == null) {
-      Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
-      if (accounts.length == 0) {
-        Log.d(TAG, "Must have a Google account installed");
-        return;
-      }
-      mAccountName = accounts[0].name;
-    }
-
     if (mGoogleApiClient == null) {
       mGoogleApiClient = new GoogleApiClient.Builder(this)
           .addApi(Drive.API)
@@ -95,6 +119,9 @@ public abstract class BaseDriveActivity extends Activity
     mGoogleApiClient.connect();
   }
 
+  /**
+   * Handles resolution callbacks.
+   */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -111,7 +138,6 @@ public abstract class BaseDriveActivity extends Activity
   @Override
   protected void onPause() {
     if (mGoogleApiClient != null) {
-      Log.i(TAG, "Disconnecting on pause");
       mGoogleApiClient.disconnect();
     }
     super.onPause();
@@ -143,10 +169,8 @@ public abstract class BaseDriveActivity extends Activity
     Log.i(TAG, "GoogleApiClient connection failed: " + result.toString());
     if (result.hasResolution()) {
       try {
-        //result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
-        result.getResolution().send(REQUEST_CODE_RESOLUTION);
-      } catch (CanceledException e) {
-        // TODO(burcud): Auto-generated catch block
+        result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
+      } catch (SendIntentException e) {
         e.printStackTrace();
       }
     }
