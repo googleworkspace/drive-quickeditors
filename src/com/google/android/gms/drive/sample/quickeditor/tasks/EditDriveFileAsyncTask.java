@@ -52,7 +52,7 @@ public abstract class EditDriveFileAsyncTask extends AsyncTask<DriveId, Boolean,
       }
 
       if (changes.getContents() != null) {
-        closeContentsResult = file.closeContents(mClient, changes.getContents());
+        closeContentsResult = file.commitAndCloseContents(mClient, changes.getContents());
         closeContentsResult.await();
       }
       return closeContentsResult.get().getStatus();

@@ -19,10 +19,12 @@ package com.google.android.gms.drive.sample.quickeditor;
 import com.google.android.gms.Batch;
 import com.google.android.gms.Batch.BatchCallback;
 import com.google.android.gms.PendingResult;
+import com.google.android.gms.Status;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.drive.Contents;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.ContentsResult;
+import com.google.android.gms.drive.DriveApi.OnNewContentsCallback;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveFile.OnContentsOpenedCallback;
 import com.google.android.gms.drive.DriveId;
@@ -30,7 +32,7 @@ import com.google.android.gms.drive.DriveResource.MetadataResult;
 import com.google.android.gms.drive.DriveResource.OnMetadataRetrievedCallback;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataChangeSet;
-import com.google.android.gms.drive.OpenFileDialogBuilder;
+import com.google.android.gms.drive.OpenFileActivityBuilder;
 import com.google.android.gms.drive.sample.quickeditor.tasks.EditDriveFileAsyncTask;
 
 import android.content.Intent;
@@ -46,8 +48,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -108,18 +108,23 @@ public class HomeActivity extends BaseDriveActivity {
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
     switch(item.getItemId()) {
       case R.id.menu_new:
-        MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
-            .setMimeType(MIME_TYPE_TEXT)
-            .setTitle(mTitleEditText.getText().toString())
-            .build();
-        Intent createIntent = Drive.DriveApi.newCreateFileDialogBuilder(mGoogleApiClient)
-            .setInitialMetadata(metadataChangeSet)
-            .setInitialContents(mContents)
-            .build();
-        startActivityForResult(createIntent, REQUEST_CODE_CREATOR);
+        Drive.DriveApi.newContents(mGoogleApiClient).addResultCallback(new OnNewContentsCallback() {
+          @Override
+          public void onNewContents(ContentsResult result) {
+            // TODO: error handling in case of failure
+            MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
+              .setMimeType(MIME_TYPE_TEXT)
+              .build();
+            Intent createIntent = Drive.DriveApi.newCreateFileActivityBuilder(mGoogleApiClient)
+                .setInitialMetadata(metadataChangeSet)
+                .setInitialContents(result.getContents())
+                .build();
+            startActivityForResult(createIntent, REQUEST_CODE_CREATOR);
+          }
+        });
         break;
       case R.id.menu_open:
-        Intent i = Drive.DriveApi.newOpenFileDialogBuilder(mGoogleApiClient)
+        Intent i = Drive.DriveApi.newOpenFileActivityBuilder(mGoogleApiClient)
             .setMimeType(new String[]{ MIME_TYPE_TEXT })
             .build();
         startActivityForResult(i, REQUEST_CODE_OPENER);
@@ -131,13 +136,17 @@ public class HomeActivity extends BaseDriveActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-      case REQUEST_CODE_OPENER:
       case REQUEST_CODE_CREATOR:
         if (resultCode == RESULT_OK) {
           mCurrentDriveId =
-              (DriveId) data.getParcelableExtra(OpenFileDialogBuilder.EXTRA_RESPONSE_DRIVE_ID);
+              (DriveId) data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
           refresh();
-          // TODO: don't reload on create
+        }
+      case REQUEST_CODE_OPENER:
+        if (resultCode == RESULT_OK) {
+          mCurrentDriveId =
+              (DriveId) data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+          refresh();
           get();
         }
         break;
@@ -164,10 +173,9 @@ public class HomeActivity extends BaseDriveActivity {
         file.openContents(mGoogleApiClient, DriveFile.MODE_READ_WRITE, null);
     new Batch(metadataResult, contentsResult).addResultCallback(new BatchCallback() {
       @Override
-      public void onBatchComplete() {
-        if (!metadataResult.get().getStatus().isSuccess()
-            || !contentsResult.get().getStatus().isSuccess()) {
-          showToast(0); // todo: message here
+      public void onBatchComplete(Status status) {
+        if (!status.getStatus().isSuccess()) {
+          showToast(R.string.msg_errretrieval);
           return;
         }
         mMetadata = metadataResult.get().getMetadata();
@@ -208,8 +216,7 @@ public class HomeActivity extends BaseDriveActivity {
   }
 
   private String readFromContents(Contents contents) {
-    FileInputStream stream = new FileInputStream(contents.getFileDescriptor());
-    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(contents.getInputStream()));
     StringBuilder builder = new StringBuilder();
     try {
       String line;
@@ -224,10 +231,8 @@ public class HomeActivity extends BaseDriveActivity {
   }
 
   private void writeContents(Contents contents, String text) {
-    FileOutputStream stream = new FileOutputStream(contents.getFileDescriptor());
     try {
-      stream.write(text.getBytes());
-      stream.close();
+      contents.getOutputStream().write(text.getBytes());
     } catch (IOException e) {
       e.printStackTrace();
     }
