@@ -11,6 +11,7 @@
     <string name="editor_contentshint">Enter text here</string>
     <string name="editor_save">Save changes</string>
 
+    <string name="msg_errconnect">An error occoured while trying to connect.</string>
     <string name="msg_errretrieval">An error occoured while retrieving the file.</string>
     <string name="msg_errsaving">An error occoured while saving.</string>
     <string name="msg_saved">Successfully saved.</string>
