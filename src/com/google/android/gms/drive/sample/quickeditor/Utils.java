@@ -21,18 +21,15 @@ import java.io.InputStreamReader;
 
 /**
  * Provides utility functions.
- *
- * @author jbd@google.com (Burcu Dogan)
  */
 public class Utils {
-	public static String readFromInputStream(InputStream is)
-			throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		StringBuilder builder = new StringBuilder();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			builder.append(line);
-		}
-		return builder.toString();
-	}
+    public static String readFromInputStream(InputStream is) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder builder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            builder.append(line);
+        }
+        return builder.toString();
+    }
 }

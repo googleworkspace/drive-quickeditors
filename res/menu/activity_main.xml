@@ -5,11 +5,11 @@
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/menu_new"/>
-    
+
     <item
         android:id="@+id/menu_open"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/menu_open"/>
-    
+
 </menu>
