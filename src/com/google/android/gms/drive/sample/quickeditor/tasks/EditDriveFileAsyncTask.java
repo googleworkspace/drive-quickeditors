@@ -1,5 +1,3 @@
-// Copyright 2013 Google Inc. All Rights Reserved.
-
 /**
  * Copyright 2013 Google Inc. All Rights Reserved.
  *
@@ -16,98 +14,94 @@
 
 package com.google.android.gms.drive.sample.quickeditor.tasks;
 
-import com.google.android.gms.GoogleApiClient;
-import com.google.android.gms.PendingResult;
+import android.os.AsyncTask;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.drive.Contents;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.ContentsResult;
 import com.google.android.gms.drive.DriveFile;
-import com.google.android.gms.drive.DriveFile.OnContentsClosedCallback;
 import com.google.android.gms.drive.DriveFile.OnContentsOpenedCallback;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource.MetadataResult;
-import com.google.android.gms.drive.DriveResource.OnMetadataUpdatedCallback;
 import com.google.android.gms.drive.MetadataChangeSet;
-
-import android.os.AsyncTask;
-import android.util.Log;
 
 /**
  * An async task to open, make changes to and close a file.
  */
-public abstract class EditDriveFileAsyncTask
-        extends AsyncTask<DriveId, Boolean, com.google.android.gms.Status> {
+public abstract class EditDriveFileAsyncTask extends
+        AsyncTask<DriveId, Boolean, com.google.android.gms.common.api.Status> {
 
-  private static final String TAG = "EditDriveFileAsyncTask";
+    private static final String TAG = "EditDriveFileAsyncTask";
 
-  private GoogleApiClient mClient;
+    private final GoogleApiClient mClient;
 
-  /**
-   * Constructor.
-   * @param client A connected {@code GoogleApiClient} instance.
-   */
-  public EditDriveFileAsyncTask(GoogleApiClient client) {
-    mClient = client;
-  }
-
-  /**
-   * Handles the editing to file metadata and contents.
-   */
-  public abstract Changes edit(Contents contents);
-
-  /**
-   * Opens contents for the given file, executes the editing tasks, saves the
-   * metadata and content changes.
-   */
-  @Override
-  protected com.google.android.gms.Status doInBackground(DriveId... params) {
-    DriveFile file = Drive.DriveApi.getFile(mClient, params[0]);
-    PendingResult<ContentsResult, OnContentsOpenedCallback> openContentsResult =
-        file.openContents(mClient, DriveFile.MODE_WRITE_ONLY, null);
-    openContentsResult.await();
-    if (!openContentsResult.get().getStatus().isSuccess()) {
-      return openContentsResult.get().getStatus();
+    /**
+     * Constructor.
+     * @param client A connected {@code GoogleApiClient} instance.
+     */
+    public EditDriveFileAsyncTask(GoogleApiClient client) {
+        mClient = client;
     }
 
-    Changes changes = edit(openContentsResult.get().getContents());
-    PendingResult<MetadataResult, OnMetadataUpdatedCallback> metadataResult = null;
-    PendingResult<com.google.android.gms.Status, OnContentsClosedCallback>
-            closeContentsResult = null;
+    /**
+     * Handles the editing to file metadata and contents.
+     */
+    public abstract Changes edit(Contents contents);
 
-    if (changes.getMetadataChangeSet() != null) {
-      metadataResult = file.updateMetadata(mClient, changes.getMetadataChangeSet());
-      metadataResult.await();
-      if (!metadataResult.get().getStatus().isSuccess()) {
-        return metadataResult.get().getStatus();
-      }
+    /**
+     * Opens contents for the given file, executes the editing tasks, saves the
+     * metadata and content changes.
+     */
+    @Override
+    protected com.google.android.gms.common.api.Status doInBackground(DriveId... params) {
+        DriveFile file = Drive.DriveApi.getFile(mClient, params[0]);
+        PendingResult<ContentsResult, OnContentsOpenedCallback> openContentsReq = file
+                .openContents(mClient, DriveFile.MODE_WRITE_ONLY, null);
+        com.google.android.gms.common.api.Status status = null;
+        ContentsResult openContentsResult = openContentsReq.await();
+        status = openContentsResult.getStatus();
+        if (!status.isSuccess()) {
+            return status;
+        }
+
+        // apply changes
+        Changes changes = edit(openContentsResult.getContents());
+        if (changes.getMetadataChangeSet() != null) {
+            MetadataResult metadataResult = file.updateMetadata(
+                    mClient, changes.getMetadataChangeSet()).await();
+            status = metadataResult.getStatus();
+            if (!status.isSuccess()) {
+                return status;
+            }
+        }
+
+        if (changes.getContents() != null) {
+            status = file.commitAndCloseContents(mClient, changes.getContents()).await();
+        }
+        return status;
     }
 
-    if (changes.getContents() != null) {
-      closeContentsResult = file.commitAndCloseContents(mClient, changes.getContents());
-      closeContentsResult.await();
-    }
-    return closeContentsResult.get().getStatus();
-  }
+    /**
+     * Represents the delta of the metadata changes and keeps a pointer to the
+     * file contents to be stored permanently.
+     */
+    public class Changes {
+        private final MetadataChangeSet mMetadataChangeSet;
+        private final Contents mContents;
 
-  /**
-   * Represents the delta of the metadata changes and keeps a pointer to the file
-   * contents to be stored permanently.
-   */
-  public class Changes {
-    private MetadataChangeSet mMetadataChangeSet;
-    private Contents mContents;
+        public Changes(MetadataChangeSet metadataChangeSet, Contents contents) {
+            mMetadataChangeSet = metadataChangeSet;
+            mContents = contents;
+        }
 
-    public Changes(MetadataChangeSet metadataChangeSet, Contents contents) {
-      mMetadataChangeSet = metadataChangeSet;
-      mContents = contents;
-    }
+        public MetadataChangeSet getMetadataChangeSet() {
+            return mMetadataChangeSet;
+        }
 
-    public MetadataChangeSet getMetadataChangeSet() {
-      return mMetadataChangeSet;
+        public Contents getContents() {
+            return mContents;
+        }
     }
-
-    public Contents getContents() {
-      return mContents;
-    }
-  }
 }
