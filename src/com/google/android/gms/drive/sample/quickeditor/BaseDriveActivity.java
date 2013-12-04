@@ -14,8 +14,6 @@
 
 package com.google.android.gms.drive.sample.quickeditor;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
@@ -58,46 +56,6 @@ public abstract class BaseDriveActivity extends Activity implements
     protected GoogleApiClient mGoogleApiClient;
 
     /**
-     * Selected account name to authorize the app for and authenticate the
-     * client with.
-     */
-    protected String mAccountName;
-
-    /**
-     * Called on activity creation. Handlers {@code EXTRA_ACCOUNT_NAME} for
-     * handle if there is one set. Otherwise, looks for the first Google account
-     * on the device and automatically picks it for client connections.
-     */
-    @Override
-    protected void onCreate(Bundle b) {
-        super.onCreate(b);
-        if (b != null) {
-            mAccountName = b.getString(EXTRA_ACCOUNT_NAME);
-        }
-        if (mAccountName == null) {
-            mAccountName = getIntent().getStringExtra(EXTRA_ACCOUNT_NAME);
-        }
-
-        if (mAccountName == null) {
-            Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
-            if (accounts.length == 0) {
-                Log.d(TAG, "Must have a Google account installed");
-                return;
-            }
-            mAccountName = accounts[0].name;
-        }
-    }
-
-    /**
-     * Saves the activity state.
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(EXTRA_ACCOUNT_NAME, mAccountName);
-    }
-
-    /**
      * Called when activity gets visible. A connection to Drive services need to
      * be initiated as soon as the activity is visible. Registers
      * {@code ConnectionCallbacks} and {@code OnConnectionFailedListener} on the
@@ -106,15 +64,12 @@ public abstract class BaseDriveActivity extends Activity implements
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAccountName == null) {
-            return;
-        }
         // TODO: Don't set account name explicitly and remove required
         // permissions to query available accounts.
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(Drive.API).addScope(Drive.SCOPE_FILE)
-                    .setAccountName(mAccountName).addConnectionCallbacks(this)
+                    .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this).build();
         }
         mGoogleApiClient.connect();
