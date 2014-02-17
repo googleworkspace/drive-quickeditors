@@ -16,7 +16,7 @@
 -->
 <resources>
 
-    <string name="app_name">QuickEditor</string>
+    <string name="app_name">Text Editor</string>
 
     <string name="menu_new">Create</string>
     <string name="menu_open">Open</string>

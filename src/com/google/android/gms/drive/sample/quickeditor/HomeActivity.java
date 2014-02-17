@@ -14,7 +14,20 @@
 
 package com.google.android.gms.drive.sample.quickeditor;
 
-import java.io.IOException;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.drive.Contents;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveApi.ContentsResult;
+import com.google.android.gms.drive.DriveFile;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.DriveResource.MetadataResult;
+import com.google.android.gms.drive.Metadata;
+import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.drive.OpenFileActivityBuilder;
+import com.google.android.gms.drive.sample.quickeditor.tasks.EditDriveFileAsyncTask;
 
 import android.content.Intent;
 import android.content.IntentSender;
@@ -30,17 +43,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.drive.Contents;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi.ContentsResult;
-import com.google.android.gms.drive.DriveApi.OnNewContentsCallback;
-import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.Metadata;
-import com.google.android.gms.drive.MetadataChangeSet;
-import com.google.android.gms.drive.OpenFileActivityBuilder;
-import com.google.android.gms.drive.sample.quickeditor.tasks.EditDriveFileAsyncTask;
-import com.google.android.gms.drive.sample.quickeditor.tasks.OpenDriveFileAsyncTask;
+import java.io.IOException;
 
 /**
  * An activity lets you open/create a Drive text file and modify.
@@ -48,12 +51,6 @@ import com.google.android.gms.drive.sample.quickeditor.tasks.OpenDriveFileAsyncT
 public class HomeActivity extends BaseDriveActivity {
 
     private static final String TAG = "MainActivity";
-
-    /**
-     * Enum to determine which operation is waiting for
-     * the Google client to be connected.
-     */
-    public enum Op { CREATE, OPEN }
 
     /**
      * Request code for creator activity.
@@ -93,12 +90,7 @@ public class HomeActivity extends BaseDriveActivity {
     /**
      * Currently opened file's contents.
      */
-    private String mContents;
-
-    /**
-     * Pending operation after client connect.
-     */
-    private Op mPendingOperation;
+    private Contents mContents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,12 +110,6 @@ public class HomeActivity extends BaseDriveActivity {
     }
 
     @Override
-    protected void onPause() {
-        mPendingOperation = null;
-        super.onPause();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main, menu);
@@ -133,20 +119,7 @@ public class HomeActivity extends BaseDriveActivity {
     @Override
     public void onConnected(Bundle connectionHint) {
         super.onConnected(connectionHint);
-        if (mPendingOperation != null) {
-            // perform pending operation
-            if (mPendingOperation == Op.CREATE) {
-                refresh();
-            } else if (mPendingOperation == Op.OPEN) {
-                get();
-            }
-            // clear pending op
-            mPendingOperation = null;
-        } else {
-            // if there are no pending operations,
-            // refresh the existing activity with the current state.
-            refresh();
-        }
+        refresh();
     }
 
     @Override
@@ -158,9 +131,10 @@ public class HomeActivity extends BaseDriveActivity {
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         if (item.getItemId() == R.id.menu_new) {
-            OnNewContentsCallback onContentsCallback = new OnNewContentsCallback() {
+            ResultCallback<ContentsResult> onContentsCallback =
+                    new ResultCallback<ContentsResult>() {
                 @Override
-                public void onNewContents(ContentsResult result) {
+                public void onResult(ContentsResult result) {
                     // TODO: error handling in case of failure
                     MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
                             .setMimeType(MIME_TYPE_TEXT).build();
@@ -177,7 +151,7 @@ public class HomeActivity extends BaseDriveActivity {
                     }
                 }
             };
-            Drive.DriveApi.newContents(mGoogleApiClient).addResultCallback(onContentsCallback);
+            Drive.DriveApi.newContents(mGoogleApiClient).setResultCallback(onContentsCallback);
         } else if (item.getItemId() == R.id.menu_open) {
             IntentSender i = Drive.DriveApi
                     .newOpenFileActivityBuilder()
@@ -203,14 +177,14 @@ public class HomeActivity extends BaseDriveActivity {
             if (resultCode == RESULT_OK) {
                 mCurrentDriveId = (DriveId) data.getParcelableExtra(
                         OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-                mPendingOperation = Op.CREATE;
+                refresh();
             }
             break;
         case REQUEST_CODE_OPENER:
             if (resultCode == RESULT_OK) {
                 mCurrentDriveId = (DriveId) data.getParcelableExtra(
                         OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-                mPendingOperation = Op.OPEN;
+                get();
             }
             break;
         default:
@@ -234,7 +208,13 @@ public class HomeActivity extends BaseDriveActivity {
         }
 
         mTitleEditText.setText(mMetadata.getTitle());
-        mContentsEditText.setText(mContents);
+        try {
+            String contents = Utils.readFromInputStream(mContents.getInputStream());
+            mContentsEditText.setText(contents);
+        } catch (IOException e) {
+            // TODO: handle it better, at least an error message
+            Log.e(TAG, "IOException while reading from contents input stream", e);
+        }
     }
 
     /**
@@ -242,19 +222,12 @@ public class HomeActivity extends BaseDriveActivity {
      */
     private void get() {
         Log.d(TAG, "Retrieving...");
-        new OpenDriveFileAsyncTask(mGoogleApiClient){
-            @Override
-            protected void onPostExecute(MetadataAndContents result) {
-                if (result == null) {
-                    showToast(R.string.msg_errretrieval);
-                    refresh();
-                    return;
-                }
-                mMetadata = result.getMetadata();
-                mContents = result.getContents();
-                refresh();
-            }
-        }.execute(mCurrentDriveId);
+        DriveFile file = Drive.DriveApi.getFile(mGoogleApiClient, mCurrentDriveId);
+        final PendingResult<MetadataResult>
+                metadataResult = file.getMetadata(mGoogleApiClient);
+        final PendingResult<ContentsResult>
+                contentsResult = file.openContents(mGoogleApiClient,
+                DriveFile.MODE_READ_ONLY | DriveFile.MODE_WRITE_ONLY, null);
     }
 
     /**
