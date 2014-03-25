@@ -145,9 +145,9 @@ public class HomeActivity extends BaseDriveActivity {
                             .build(mGoogleApiClient);
                     try {
                         startIntentSenderForResult(createIntentSender, REQUEST_CODE_CREATOR, null,
-                            0, 0, 0);
+                                0, 0, 0);
                     } catch (SendIntentException e) {
-                      Log.w(TAG, "Unable to send intent", e);
+                        Log.w(TAG, "Unable to send intent", e);
                     }
                 }
             };
@@ -160,7 +160,7 @@ public class HomeActivity extends BaseDriveActivity {
             try {
                 startIntentSenderForResult(i, REQUEST_CODE_OPENER, null, 0, 0, 0);
             } catch (SendIntentException e) {
-              Log.w(TAG, "Unable to send intent", e);
+                Log.w(TAG, "Unable to send intent", e);
             }
         }
         return super.onMenuItemSelected(featureId, item);
@@ -173,22 +173,22 @@ public class HomeActivity extends BaseDriveActivity {
     protected void onActivityResult(int requestCode, int resultCode,
             Intent data) {
         switch (requestCode) {
-        case REQUEST_CODE_CREATOR:
-            if (resultCode == RESULT_OK) {
-                mCurrentDriveId = (DriveId) data.getParcelableExtra(
-                        OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-                refresh();
-            }
-            break;
-        case REQUEST_CODE_OPENER:
-            if (resultCode == RESULT_OK) {
-                mCurrentDriveId = (DriveId) data.getParcelableExtra(
-                        OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-                get();
-            }
-            break;
-        default:
-            super.onActivityResult(requestCode, resultCode, data);
+            case REQUEST_CODE_CREATOR:
+                if (resultCode == RESULT_OK) {
+                    mCurrentDriveId = (DriveId) data.getParcelableExtra(
+                            OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+                    refresh();
+                }
+                break;
+            case REQUEST_CODE_OPENER:
+                if (resultCode == RESULT_OK) {
+                    mCurrentDriveId = (DriveId) data.getParcelableExtra(
+                            OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+                    get();
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

@@ -34,76 +34,75 @@ import android.os.AsyncTask;
 public abstract class EditDriveFileAsyncTask
         extends AsyncTask<DriveId, Boolean, com.google.android.gms.common.api.Status> {
 
-  private static final String TAG = "EditDriveFileAsyncTask";
+    private static final String TAG = "EditDriveFileAsyncTask";
 
-  private GoogleApiClient mClient;
+    private GoogleApiClient mClient;
 
-  /**
-   * Constructor.
-   * @param client A connected {@code GoogleApiClient} instance.
-   */
-  public EditDriveFileAsyncTask(GoogleApiClient client) {
-    mClient = client;
-  }
-
-  /**
-   * Handles the editing to file metadata and contents.
-   */
-  public abstract Changes edit(Contents contents);
-
-  /**
-   * Opens contents for the given file, executes the editing tasks, saves the
-   * metadata and content changes.
-   */
-  @Override
-  protected com.google.android.gms.common.api.Status doInBackground(DriveId... params) {
-    DriveFile file = Drive.DriveApi.getFile(mClient, params[0]);
-    PendingResult<ContentsResult> openContentsResult =
-        file.openContents(mClient, DriveFile.MODE_WRITE_ONLY, null);
-    openContentsResult.await();
-    if (!openContentsResult.await().getStatus().isSuccess()) {
-      return openContentsResult.await().getStatus();
+    /**
+     * Constructor.
+     *
+     * @param client A connected {@code GoogleApiClient} instance.
+     */
+    public EditDriveFileAsyncTask(GoogleApiClient client) {
+        mClient = client;
     }
 
-    Changes changes = edit(openContentsResult.await().getContents());
-    PendingResult<MetadataResult> metadataResult = null;
-    PendingResult<com.google.android.gms.common.api.Status>
-            closeContentsResult = null;
+    /**
+     * Handles the editing to file metadata and contents.
+     */
+    public abstract Changes edit(Contents contents);
 
-    if (changes.getMetadataChangeSet() != null) {
-      metadataResult = file.updateMetadata(mClient, changes.getMetadataChangeSet());
-      metadataResult.await();
-      if (!metadataResult.await().getStatus().isSuccess()) {
-        return metadataResult.await().getStatus();
-      }
+    /**
+     * Opens contents for the given file, executes the editing tasks, saves the
+     * metadata and content changes.
+     */
+    @Override
+    protected com.google.android.gms.common.api.Status doInBackground(DriveId... params) {
+        DriveFile file = Drive.DriveApi.getFile(mClient, params[0]);
+        PendingResult<ContentsResult> openContentsResult =
+                file.openContents(mClient, DriveFile.MODE_WRITE_ONLY, null);
+        if (!openContentsResult.await().getStatus().isSuccess()) {
+            return openContentsResult.await().getStatus();
+        }
+
+        Changes changes = edit(openContentsResult.await().getContents());
+        PendingResult<MetadataResult> metadataResult = null;
+        PendingResult<com.google.android.gms.common.api.Status>
+                closeContentsResult = null;
+
+        if (changes.getMetadataChangeSet() != null) {
+            metadataResult = file.updateMetadata(mClient, changes.getMetadataChangeSet());
+            if (!metadataResult.await().getStatus().isSuccess()) {
+                return metadataResult.await().getStatus();
+            }
+        }
+
+        if (changes.getContents() != null) {
+            closeContentsResult = file.commitAndCloseContents(mClient, changes.getContents());
+            closeContentsResult.await();
+        }
+        return closeContentsResult.await().getStatus();
     }
 
-    if (changes.getContents() != null) {
-      closeContentsResult = file.commitAndCloseContents(mClient, changes.getContents());
-      closeContentsResult.await();
-    }
-    return closeContentsResult.await().getStatus();
-  }
+    /**
+     * Represents the delta of the metadata changes and keeps a pointer to the file
+     * contents to be stored permanently.
+     */
+    public class Changes {
+        private MetadataChangeSet mMetadataChangeSet;
+        private Contents mContents;
 
-  /**
-   * Represents the delta of the metadata changes and keeps a pointer to the file
-   * contents to be stored permanently.
-   */
-  public class Changes {
-    private MetadataChangeSet mMetadataChangeSet;
-    private Contents mContents;
+        public Changes(MetadataChangeSet metadataChangeSet, Contents contents) {
+            mMetadataChangeSet = metadataChangeSet;
+            mContents = contents;
+        }
 
-    public Changes(MetadataChangeSet metadataChangeSet, Contents contents) {
-      mMetadataChangeSet = metadataChangeSet;
-      mContents = contents;
-    }
+        public MetadataChangeSet getMetadataChangeSet() {
+            return mMetadataChangeSet;
+        }
 
-    public MetadataChangeSet getMetadataChangeSet() {
-      return mMetadataChangeSet;
+        public Contents getContents() {
+            return mContents;
+        }
     }
-
-    public Contents getContents() {
-      return mContents;
-    }
-  }
 }
