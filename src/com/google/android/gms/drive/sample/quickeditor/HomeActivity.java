@@ -16,11 +16,10 @@ package com.google.android.gms.drive.sample.quickeditor;
 
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.drive.Contents;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi.ContentsResult;
+import com.google.android.gms.drive.DriveApi.DriveContentsResult;
+import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource.MetadataResult;
@@ -90,7 +89,7 @@ public class HomeActivity extends BaseDriveActivity {
     /**
      * Currently opened file's contents.
      */
-    private Contents mContents;
+    private DriveContents mDriveContents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,17 +130,17 @@ public class HomeActivity extends BaseDriveActivity {
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         if (item.getItemId() == R.id.menu_new) {
-            ResultCallback<ContentsResult> onContentsCallback =
-                    new ResultCallback<ContentsResult>() {
+            ResultCallback<DriveContentsResult> onContentsCallback =
+                    new ResultCallback<DriveContentsResult>() {
                 @Override
-                public void onResult(ContentsResult result) {
+                public void onResult(DriveContentsResult result) {
                     // TODO: error handling in case of failure
                     MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
                             .setMimeType(MIME_TYPE_TEXT).build();
                     IntentSender createIntentSender = Drive.DriveApi
                             .newCreateFileActivityBuilder()
                             .setInitialMetadata(metadataChangeSet)
-                            .setInitialContents(result.getContents())
+                            .setInitialDriveContents(result.getDriveContents())
                             .build(mGoogleApiClient);
                     try {
                         startIntentSenderForResult(createIntentSender, REQUEST_CODE_CREATOR, null,
@@ -151,7 +150,7 @@ public class HomeActivity extends BaseDriveActivity {
                     }
                 }
             };
-            Drive.DriveApi.newContents(mGoogleApiClient).setResultCallback(onContentsCallback);
+            Drive.DriveApi.newDriveContents(mGoogleApiClient).setResultCallback(onContentsCallback);
         } else if (item.getItemId() == R.id.menu_open) {
             IntentSender i = Drive.DriveApi
                     .newOpenFileActivityBuilder()
@@ -203,13 +202,13 @@ public class HomeActivity extends BaseDriveActivity {
         }
         mSaveButton.setEnabled(true);
 
-        if (mMetadata == null || mContents == null) {
+        if (mMetadata == null || mDriveContents == null) {
             return;
         }
 
         mTitleEditText.setText(mMetadata.getTitle());
         try {
-            String contents = Utils.readFromInputStream(mContents.getInputStream());
+            String contents = Utils.readFromInputStream(mDriveContents.getInputStream());
             mContentsEditText.setText(contents);
         } catch (IOException e) {
             // TODO: handle it better, at least an error message
@@ -225,8 +224,8 @@ public class HomeActivity extends BaseDriveActivity {
         DriveFile file = Drive.DriveApi.getFile(mGoogleApiClient, mCurrentDriveId);
         final PendingResult<MetadataResult>
                 metadataResult = file.getMetadata(mGoogleApiClient);
-        final PendingResult<ContentsResult>
-                contentsResult = file.openContents(mGoogleApiClient,
+        final PendingResult<DriveContentsResult>
+                contentsResult = file.open(mGoogleApiClient,
                 DriveFile.MODE_READ_ONLY | DriveFile.MODE_WRITE_ONLY, null);
     }
 
@@ -240,16 +239,16 @@ public class HomeActivity extends BaseDriveActivity {
         }
         new EditDriveFileAsyncTask(mGoogleApiClient) {
             @Override
-            public Changes edit(Contents contents) {
+            public Changes edit(DriveContents driveContents) {
                 MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
                         .setTitle(mTitleEditText.getText().toString()).build();
                 try {
                     byte[] body = mContentsEditText.getText().toString().getBytes();
-                    contents.getOutputStream().write(body);
+                    driveContents.getOutputStream().write(body);
                 } catch (IOException e) {
-                    Log.e(TAG, "IOException while reading from contents output stream", e);
+                    Log.e(TAG, "IOException while reading from driveContents output stream", e);
                 }
-                return new Changes(metadataChangeSet, contents);
+                return new Changes(metadataChangeSet, driveContents);
             }
 
             @Override
