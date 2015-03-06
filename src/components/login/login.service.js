@@ -30,7 +30,7 @@ angular.module('editor.login').service('login', ['$q', '$mdDialog', 'googleApi',
     if (user) {
       request.login_hint = user;
       request.authuser = -1;
-    };
+    }
     return request;
   };
 
@@ -68,7 +68,7 @@ angular.module('editor.login').service('login', ['$q', '$mdDialog', 'googleApi',
   this.login = function (user) {
     var request = buildAuthRequest(false, user);
     return executeRequest(request);
-  }
+  };
 
   /**
    * Silently check to see if a user has already authorized the app.

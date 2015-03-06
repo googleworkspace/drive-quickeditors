@@ -8,7 +8,7 @@ var MultiPartBuilder = function() {
   this.mimeType = 'multipart/mixed; boundary="' + this.boundary + '"';
   this.parts = [];
   this.body = null;
-}
+};
 
 /**
  * Appends a part.
@@ -17,7 +17,7 @@ var MultiPartBuilder = function() {
  * @param {Blob|File|String} content Body of this part
  */
 MultiPartBuilder.prototype.append = function(mimeType, content) {
-  if(this.body != null) {
+  if(this.body !== null) {
     throw new Error("Builder has already been finalized.");
   }
   this.parts.push(
@@ -35,10 +35,10 @@ MultiPartBuilder.prototype.append = function(mimeType, content) {
  * @returns {Object} Object containing the mime type (mimeType) & assembled multipart body (body)
  */
 MultiPartBuilder.prototype.finish = function() {
-  if (this.parts.length == 0) {
+  if (this.parts.length === 0) {
     throw new Error("No parts have been added.");
   }
-  if (this.body == null) {
+  if (this.body === null) {
     this.parts.push("\r\n--", this.boundary, "--");
     this.body = this.parts.join('');
     // TODO - switch to blob once gapi.client.request allows it
@@ -48,4 +48,4 @@ MultiPartBuilder.prototype.finish = function() {
     type: this.mimeType,
     body: this.body
   };
-}
+};

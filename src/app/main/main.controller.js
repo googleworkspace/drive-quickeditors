@@ -24,6 +24,7 @@ module.controller('MainCtrl', ['$scope', '$location', '$routeParams', '$q', '$md
   var DEFAULT_FILE = {
     content: '',
     metadata: {
+      id: null,
       title: 'untitled.txt',
       mimeType: 'text/plain',
       editable: true
@@ -76,7 +77,7 @@ module.controller('MainCtrl', ['$scope', '$location', '$routeParams', '$q', '$md
       }
       return load();
     });
-  }
+  };
 
   /**
    * Check to see if the URL should be changed (new doc ID), redirects
@@ -99,7 +100,7 @@ module.controller('MainCtrl', ['$scope', '$location', '$routeParams', '$q', '$md
    * @param {Event} $event Original click event
    */
   this.saveFile = function($event) {
-    if ($scope.file.metadata.id == null) {
+    if ($scope.file.metadata.id === null) {
       return this.renameFile($event);
     } else {
       return save();
@@ -132,10 +133,10 @@ module.controller('MainCtrl', ['$scope', '$location', '$routeParams', '$q', '$md
    * Handle the share click. Displays the Drive sharing dialog.
    */
   this.shareFile = function($event) {
-    if($scope.file.metadata.id == null) {
+    if($scope.file.metadata.id === null) {
         $scope.ctrl.renameFile($event).then(function() {
           drive.showSharing($scope.file.metadata.id);
-        })
+        });
     } else {
       drive.showSharing($scope.file.metadata.id);
     }

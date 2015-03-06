@@ -27,7 +27,7 @@ function on_gapi_loaded() {
   } else {
     setTimeout(on_gapi_loaded, 10);
   }
-};
+}
 
 var module = angular.module('editor.gapi', []);
 

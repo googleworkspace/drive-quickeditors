@@ -101,7 +101,7 @@ module.service('drive', ['$q', '$cacheFactory', 'googleApi', 'applicationId', fu
         },
         headers: { 'Content-Type' : multipart.type },
         body: multipart.body
-      })
+      });
       return $q.when(uploadRequest);
     }).then(function(response) {
       return combineAndStoreResults(response.result, content);

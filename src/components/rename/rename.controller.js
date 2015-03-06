@@ -35,5 +35,5 @@ module.controller('RenameCtrl', ['$scope', '$mdDialog', 'title', function ($scop
   */
   this.cancel = function() {
   	$mdDialog.cancel();
-  }
+  };
 }]);
