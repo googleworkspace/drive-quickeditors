@@ -1,0 +1,5 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '7.0'
+
+link_with 'ios-quickeditor', 'ios-quickeditorTests'
+pod 'Google-API-Client/Drive', '~> 1.0'

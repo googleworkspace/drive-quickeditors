@@ -1,0 +1,21 @@
+PODS:
+  - Google-API-Client/Common (1.0.422):
+    - gtm-http-fetcher (~> 1.0.141)
+    - gtm-oauth2 (~> 1.0.125)
+  - Google-API-Client/Drive (1.0.422):
+    - Google-API-Client/Common
+    - gtm-http-fetcher (~> 1.0.141)
+    - gtm-oauth2 (~> 1.0.125)
+  - gtm-http-fetcher (1.0.141)
+  - gtm-oauth2 (1.0.126):
+    - gtm-http-fetcher (~> 1.0.141)
+
+DEPENDENCIES:
+  - Google-API-Client/Drive (~> 1.0)
+
+SPEC CHECKSUMS:
+  Google-API-Client: 94e15390b2f5507e81a9a8c0edd58a02d2ab464b
+  gtm-http-fetcher: 6d4617e7d343b6e4c082b777541c334eb6f5d81e
+  gtm-oauth2: 60651b37376fa8fa5d1b92c9a631bd36ba093fd3
+
+COCOAPODS: 0.35.0
