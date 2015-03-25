@@ -1,0 +1,55 @@
+<!doctype html>
+<html class="no-js" ng-app="editor">
+  <head>
+    <meta charset="utf-8">
+    <title>editor</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- run `gulp wiredep` to automaticaly populate bower styles dependencies -->
+    <!-- endbower -->
+    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/theme/xq-light.css">
+    <link rel="stylesheet" href="../bower_components/mdi/materialdesignicons.css">
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp/serve,src}) styles/app.css -->
+    <!-- inject:css -->
+    <!-- css files will be automaticaly insert here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+
+  </head>
+  <body layout=column>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div flex layout-fill layout=column ng-view></div>
+
+    <!-- build:js(src) scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- run `gulp wiredep` to automaticaly populate bower script dependencies -->
+    <!-- endbower -->
+    <script type="text/javascript" src="../bower_components/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+    <!-- inject:js -->
+    <!-- js files will be automaticaly insert here -->
+    <!-- endinject -->
+
+    <!-- inject:partials -->
+    <!-- angular templates will be automatically converted in js and inserted here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+    <script type="text/javascript">
+    console.log("About to load GAPI");
+    </script>
+    <script src="https://apis.google.com/js/drive-share:picker:client:platform.js?onload=on_gapi_loaded"></script>
+  </body>
+</html>
