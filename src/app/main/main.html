@@ -1,14 +1,19 @@
 <md-toolbar ng-hide="loading" layout="row">
-  <div  class="md-toolbar-tools">
-    <span flex ng-click="ctrl.renameFile($event)">{{file.metadata.title}}</span>
+  <div class="md-toolbar-tools">
+    <span flex ng-click="ctrl.renameFile($event)">
+      <span>{{file.metadata.title}}<md-tooltip>Click to rename</md-tooltip></span>
+    </span>
     <md-button ng-click="ctrl.shareFile($event)" class="toolbar-action" aria-label="Share file">
       <md-icon alt="share" md-font-icon="mdi mdi-account-multiple"></md-icon>
+      <md-tooltip>Share file</md-tooltip>
     </md-button>
-    <md-button ng-click="ctrl.saveFile($event)" class="toolbar-action" aria-label="Save file">
+    <md-button ng-click="ctrl.saveFile($event)" class="toolbar-action" aria-label="Save file to Google Drive">
       <md-icon alt="save" md-font-icon="mdi mdi-content-save"></md-icon>
+      <md-tooltip>Save file to Google Drive&#0153;</md-tooltip>
     </md-button>
-    <md-button ng-click="ctrl.openFile($event)" class="toolbar-action" hide-sm aria-label="Open file">
+    <md-button ng-click="ctrl.openFile($event)" class="toolbar-action" hide-sm aria-label="Open file from Google Drive">
       <md-icon alt="open" md-font-icon="mdi mdi-google-drive"></md-icon>
+      <md-tooltip>Open file from Google Drive&#0153;</md-tooltip>
     </md-button>
   </div>
 </md-toolbar>

@@ -52,6 +52,7 @@ module.controller('MainCtrl', ['$scope', '$location', '$routeParams', '$q', '$md
     return drive.saveFile($scope.file.metadata, $scope.file.content).then(function(result) {
       redirectIfChanged(result.metadata.id);
       $scope.file = result;
+      showMessage('File saved');
       return $scope.file;
     }, function(err) {
       showMessage('Unable to save file');
