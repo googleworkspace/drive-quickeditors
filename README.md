@@ -34,7 +34,7 @@ First, you need to activate the Drive API for your app. You can do it by configu
         git clone git@github.com:googledrive/ios-quickeditor.git
         cd ios-quickeditor
 1. Open `ios-quickeditor/ios-quickeditor.xcworkspace` in Xcode
-1. Edit `QEEditFilesListViewController.m` and replace `<CLIENT_ID>` and `<CLIENT_SECRET>` with the values from the
+1. Edit `QEFilesListViewController.m` and replace `<CLIENT_ID>` and `<CLIENT_SECRET>` with the values from the
 [Google Developers Console](https://console.developers.google.com/apis/console/)
 1. Build the project and run it on the iOS simulator.
 
