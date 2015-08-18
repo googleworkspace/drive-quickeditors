@@ -1,0 +1,3 @@
+bin/*
+gen/*
+!bin/android-texteditor.apk
