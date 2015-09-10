@@ -80,7 +80,7 @@ public abstract class EditDriveFileAsyncTask
      */
     @Override
     protected com.google.android.gms.common.api.Status doInBackground(DriveId... params) {
-        DriveFile file = Drive.DriveApi.getFile(mClient, params[0]);
+        DriveFile file = params[0].asDriveFile();
         PendingResult<DriveContentsResult> openDriveContentsResult =
                 file.open(mClient, DriveFile.MODE_WRITE_ONLY, null);
         if (!openDriveContentsResult.await().getStatus().isSuccess()) {

@@ -221,7 +221,7 @@ public class HomeActivity extends BaseDriveActivity {
      */
     private void get() {
         Log.d(TAG, "Retrieving...");
-        DriveFile file = Drive.DriveApi.getFile(mGoogleApiClient, mCurrentDriveId);
+        DriveFile file = mCurrentDriveId.asDriveFile();
         final PendingResult<MetadataResult>
                 metadataResult = file.getMetadata(mGoogleApiClient);
         final PendingResult<DriveContentsResult>
