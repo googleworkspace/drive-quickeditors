@@ -28,13 +28,12 @@ angular.module('editor', ['editor.login', 'editor.rename', 'editor.drive', 'ngRo
   .config(function ($routeProvider) {
     $routeProvider
       .when('/edit/:fileId?', {
-        templateUrl: 'app/main/main.html',
+        templateUrl: 'main/main.html',
         controller: 'MainCtrl',
         controllerAs: 'ctrl'
       })
       .otherwise({
         redirectTo: function() {
-          console.log("Otherwise...");
           return '/edit/';
         }
       });

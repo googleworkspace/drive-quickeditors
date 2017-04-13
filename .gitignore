@@ -1,5 +1,5 @@
 node_modules/
-bower_components/
+src/bower_components/
 .sass-cache/
 .tmp/
 dist/

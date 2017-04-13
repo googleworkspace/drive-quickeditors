@@ -15,21 +15,16 @@ The project can run on any static web server.
 
 ## Building from source
 
-If you don't already have [Gulp](http://gulpjs.com/) and [Bower](http://bower.io/) you can install with:
-
-    npm install -g gulp bower
-
 Fetch the source for the app:
 
     git clone https://github.com/googledrive/web-quickeditor.git
     cd web-quickeditor
-    npm install & bower install
+    npm install
 
 ### Create a Google APIs project and Activate the Drive API
 
-First, you need to activate the Drive API for your app. You can do it by configuring your API project in the
+First, you need to activate the Drive API for your app. Activate it by configuring your API project in the
 [Google Developers Console](https://console.developers.google.com/).
-
 
 - Use [this wizard](https://console.developers.google.com/start/api?id=drive) to create or select a project in the Google Developers Console and automatically enable the API.
 - Open the **API Manager** on the left sidebar.
@@ -59,6 +54,4 @@ Update the `clientId` and `applicationId` constants in `index.js` with your app'
 
 ### Deploy & run
 
-You can run a local server with gulp:
-
-    gulp serve
+You can run a local server with `npm start`:
