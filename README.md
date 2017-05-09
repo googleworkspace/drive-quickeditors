@@ -42,8 +42,9 @@ To enable integration with the Drive UI, including the sharing dialog, perform t
 - Click **Enable API**
 - Select the **Drive UI Integration** tab
 - Fill out the **Application Name** and upload at least one **Application Icon**.
-- Set the *Open URL** to `http://YOURHOST/#/edit/{ids}/?user={userId}`
-- Check the *Create With** option and set the **New URL** to `http://YOURHOST/#/edit?user={userId}`
+- Set the **Open URL** to `http://YOURHOST/#/edit/{ids}/?user={userId}`
+- Check the **Create With** option and set the **New URL** to `http://YOURHOST/#/edit?user={userId}`
+- Check the **This application works properly with files in Team Drives** option
 - Click **Save Changes**
 
 Adjust the above URLs as needed for the correct hostname or path. Localhost is currently not allowed.

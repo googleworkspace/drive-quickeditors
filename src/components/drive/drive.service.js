@@ -55,10 +55,12 @@ module.service('drive', ['$q', '$cacheFactory', 'googleApi', 'applicationId', fu
     return googleApi.then(function(gapi) {
       var metadataRequest = gapi.client.drive.files.get({
         fileId: fileId,
+        supportsTeamDrives: true,
         fields: DEFAULT_FIELDS
       });
       var contentRequest = gapi.client.drive.files.get({
         fileId: fileId,
+        supportsTeamDrives: true,
         alt: 'media'
       });
       return $q.all([$q.when(metadataRequest), $q.when(contentRequest)]);
@@ -97,6 +99,7 @@ module.service('drive', ['$q', '$cacheFactory', 'googleApi', 'applicationId', fu
         method: method,
         params: {
           uploadType: 'multipart',
+          supportsTeamDrives: true,
           fields: DEFAULT_FIELDS
         },
         headers: { 'Content-Type' : multipart.type },
