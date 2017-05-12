@@ -9,7 +9,7 @@ capable of editing files with the MIME type text/* that are stored in a user's G
 
 ## Prerequisites
 
-To run this quickstart, you'll need:
+To run this sample, you'll need:
 
 * [Xcode 8.0](https://developer.apple.com/xcode/) or greater.
 * [CocoaPods](http://cocoapods.org/) dependency manager.
