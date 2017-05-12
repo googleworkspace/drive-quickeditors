@@ -15,23 +15,18 @@
  */
 #import "QEFilesListViewController.h"
 
-#import "GTLDrive.h"
-#import "GTMOAuth2ViewControllerTouch.h"
+#import <GTLRDrive.h>
+#import <Google/SignIn.h>
 
 #import "QEFileEditViewController.h"
 #import "QEUtilities.h"
-
-// Constants used for OAuth 2.0 authorization.
-static NSString *const kKeychainItemName = @"iOSDriveSample: Google Drive";
-static NSString *const kClientId = @"709207149709-ji3gmrdvavd93r268ni6p3vg0r19m7q8.apps.googleusercontent.com";
-static NSString *const kClientSecret = @"3khRO33vwYeWN2ASShpxgovN";
 
 @implementation QEFilesListViewController
 @synthesize addButton = _addButton;
 @synthesize authButton = _authButton;
 @synthesize refreshButton = _refreshButton;
 @synthesize driveFiles = _driveFiles;
-@synthesize isAuthorized = _isAuthorized;
+@synthesize driveService = _driveService;
 
 
 - (void)awakeFromNib
@@ -41,16 +36,14 @@ static NSString *const kClientSecret = @"3khRO33vwYeWN2ASShpxgovN";
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    // Check for authorization.
-    GTMOAuth2Authentication *auth =
-    [GTMOAuth2ViewControllerTouch authForGoogleFromKeychainForName:kKeychainItemName
-                                                          clientID:kClientId
-                                                      clientSecret:kClientSecret];
-    if ([auth canAuthorize]) {
-        [self isAuthorizedWithAuthentication:auth];
-    }
+    // Configure Google Sign-in.
+    GIDSignIn* signIn = [GIDSignIn sharedInstance];
+    signIn.delegate = self;
+    signIn.uiDelegate = self;
+    signIn.scopes = [NSArray arrayWithObjects:kGTLRAuthScopeDrive, nil];
+    [signIn signInSilently];
+        
+    self.driveService = [[GTLRDriveService alloc] init];
 }
 
 - (void)viewDidUnload
@@ -64,32 +57,16 @@ static NSString *const kClientSecret = @"3khRO33vwYeWN2ASShpxgovN";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!self.isAuthorized) {
+    GIDGoogleUser *currentUser = [GIDSignIn sharedInstance].currentUser;
+    NSLog(@"user = %@", currentUser);
+    if (!currentUser) {
+        [self toggleActionButtons:NO];
         [self showSignIn];
-    } else {
-        // Sort Drive Files by modified date (descending order).
-        [self.driveFiles sortUsingComparator:^NSComparisonResult(GTLDriveFile *lhs,
-                                                                 GTLDriveFile *rhs) {
-            return [rhs.modifiedDate.date compare:lhs.modifiedDate.date];
-        }];
-        [self.tableView reloadData];
     }
 }
 
 - (void)showSignIn {
-    // Sign in.
-    SEL finishedSelector = @selector(viewController:finishedWithAuth:error:);
-    GTMOAuth2ViewControllerTouch *authViewController =
-    [[GTMOAuth2ViewControllerTouch alloc] initWithScope:kGTLAuthScopeDriveFile
-                                               clientID:kClientId
-                                           clientSecret:kClientSecret
-                                       keychainItemName:kKeychainItemName
-                                               delegate:self
-                                       finishedSelector:finishedSelector];
-    [self presentViewController:authViewController
-                       animated:YES
-                     completion:nil];
-
+    [[GIDSignIn sharedInstance] signIn];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -113,8 +90,8 @@ static NSString *const kClientSecret = @"3khRO33vwYeWN2ASShpxgovN";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
-    GTLDriveFile *file = [self.driveFiles objectAtIndex:indexPath.row];
-    cell.textLabel.text = file.title;
+    GTLRDrive_File *file = [self.driveFiles objectAtIndex:indexPath.row];
+    cell.textLabel.text = file.name;
     return cell;
 }
 
@@ -127,17 +104,17 @@ static NSString *const kClientSecret = @"3khRO33vwYeWN2ASShpxgovN";
     
     if ([segueIdentifier isEqualToString:@"editFile"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        GTLDriveFile *file = [self.driveFiles objectAtIndex:indexPath.row];
+        GTLRDrive_File *file = [self.driveFiles objectAtIndex:indexPath.row];
         viewController.driveFile = file;
         viewController.fileIndex = indexPath.row;
     } else if ([segueIdentifier isEqualToString:@"addFile"]) {
-        viewController.driveFile = [GTLDriveFile object];
+        viewController.driveFile = [GTLRDrive_File object];
         viewController.fileIndex = -1;
     }
 }
 
 - (NSInteger)didUpdateFileWithIndex:(NSInteger)index
-                          driveFile:(GTLDriveFile *)driveFile {
+                          driveFile:(GTLRDrive_File *)driveFile {
     if (index == -1) {
         if (driveFile != nil) {
             // New file inserted.
@@ -157,28 +134,31 @@ static NSString *const kClientSecret = @"3khRO33vwYeWN2ASShpxgovN";
     return index;
 }
 
-- (GTLServiceDrive *)driveService {
-    static GTLServiceDrive *service = nil;
-    
-    if (!service) {
-        service = [[GTLServiceDrive alloc] init];
-        
-        // Have the service object set tickets to fetch consecutive pages
-        // of the feed so we do not need to manually fetch them.
-        service.shouldFetchNextPages = YES;
-        
-        // Have the service object set tickets to retry temporary error conditions
-        // automatically.
-        service.retryEnabled = YES;
+- (void)signIn:(GIDSignIn *)signIn
+didSignInForUser:(GIDGoogleUser *)user
+     withError:(NSError *)error {
+    GIDGoogleUser *currentUser = [GIDSignIn sharedInstance].currentUser;
+    NSLog(@"user = %@", currentUser);
+
+    if (currentUser) {
+        self.driveService.authorizer = currentUser.authentication.fetcherAuthorizer;
+        self.authButton.title = @"Sign out";
+        [self toggleActionButtons:YES];
+        [self loadDriveFiles];
     }
-    return service;
 }
 
+- (void)signIn:(GIDSignIn *)signIn
+didDisconnectWithUser:(GIDGoogleUser *)user
+     withError:(NSError *)error {
+    NSLog(@"User signed-out");
+}
+
+
 - (IBAction)signoutButtonClicked:(id)sender {
-    // Sign out
-    [GTMOAuth2ViewControllerTouch removeAuthFromKeychainForName:kKeychainItemName];
-    [[self driveService] setAuthorizer:nil];
-    self.isAuthorized = NO;
+    NSLog(@"Signing out user");
+    [[GIDSignIn sharedInstance] signOut];
+    self.driveService.authorizer = nil;
     [self toggleActionButtons:NO];
     [self.driveFiles removeAllObjects];
     [self.tableView reloadData];
@@ -194,39 +174,31 @@ static NSString *const kClientSecret = @"3khRO33vwYeWN2ASShpxgovN";
     self.refreshButton.enabled = enabled;
 }
 
-- (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController
-      finishedWithAuth:(GTMOAuth2Authentication *)auth
-                 error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    if (error == nil) {
-        [self isAuthorizedWithAuthentication:auth];
-    }
-}
-
-- (void)isAuthorizedWithAuthentication:(GTMOAuth2Authentication *)auth {
-    [[self driveService] setAuthorizer:auth];
-    self.authButton.title = @"Sign out";
-    self.isAuthorized = YES;
-    [self toggleActionButtons:YES];
-    [self loadDriveFiles];
-}
 
 - (void)loadDriveFiles {
-    GTLQueryDrive *query = [GTLQueryDrive queryForFilesList];
+    GTLRDriveQuery_FilesList *query = [GTLRDriveQuery_FilesList query];
     query.q = @"mimeType = 'text/plain'";
+    query.pageSize = 100;
+    query.fields = @"files(id,name,mimeType,modifiedTime),nextPageToken";
     
     UIAlertView *alert = [QEUtilities showLoadingMessageWithTitle:@"Loading files"
                                                              delegate:self];
-    [self.driveService executeQuery:query completionHandler:^(GTLServiceTicket *ticket,
-                                                              GTLDriveFileList *files,
-                                                              NSError *error) {
+    [self.driveService executeQuery:query
+                  completionHandler:^(GTLRServiceTicket *ticket,
+                                      GTLRDrive_FileList *files,
+                                      NSError *error) {
         [alert dismissWithClickedButtonIndex:0 animated:YES];
         if (error == nil) {
             if (self.driveFiles == nil) {
                 self.driveFiles = [[NSMutableArray alloc] init];
             }
             [self.driveFiles removeAllObjects];
-            [self.driveFiles addObjectsFromArray:files.items];
+            [self.driveFiles addObjectsFromArray:files.files];
+            // Sort Drive Files by modified date (descending order).
+            [self.driveFiles sortUsingComparator:^NSComparisonResult(GTLRDrive_File *lhs,
+                                                                     GTLRDrive_File *rhs) {
+                return [rhs.modifiedTime.date compare:lhs.modifiedTime.date];
+            }];
             [self.tableView reloadData];
         } else {
             NSLog(@"An error occurred: %@", error);

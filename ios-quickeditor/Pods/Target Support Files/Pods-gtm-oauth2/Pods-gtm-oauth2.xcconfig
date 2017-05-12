@@ -1,1 +1,0 @@
-PODS_GTM_OAUTH__OTHER_LDFLAGS = -framework "Security" -framework "SystemConfiguration"

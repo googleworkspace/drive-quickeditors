@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#import "GTLDrive.h"
+#import <GTLRDrive.h>
 #import "QEFileEditDelegate.h"
 #import <UIKit/UIKit.h>
 
 @interface QEFileEditViewController : UIViewController <UITextViewDelegate, UIAlertViewDelegate>
 
-@property GTLServiceDrive *driveService;
-@property GTLDriveFile *driveFile;
+@property GTLRDriveService *driveService;
+@property GTLRDrive_File *driveFile;
 @property id<QEFileEditDelegate> delegate;
 @property NSInteger fileIndex;
 

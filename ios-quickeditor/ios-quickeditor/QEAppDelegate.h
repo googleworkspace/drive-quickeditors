@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 #import <UIKit/UIKit.h>
+#import <Google/SignIn.h>
 
 @interface QEAppDelegate : UIResponder <UIApplicationDelegate>
 

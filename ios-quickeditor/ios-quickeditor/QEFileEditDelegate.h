@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#import "GTLDrive.h"
+#import <GTLRDrive.h>
 
 @protocol QEFileEditDelegate
 - (NSInteger)didUpdateFileWithIndex:(NSInteger)index
-                          driveFile:(GTLDriveFile *)driveFile;
+                          driveFile:(GTLRDrive_File *)driveFile;
 @end

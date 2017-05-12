@@ -1,5 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '7.0'
+platform :ios, ‘8.0’
 
-link_with 'ios-quickeditor', 'ios-quickeditorTests'
-pod 'Google-API-Client/Drive', '~> 1.0'
+target 'ios-quickeditor' do
+  pod 'GoogleAPIClientForREST/Drive', '~> 1.2.1'
+  pod 'Google/SignIn', '~> 3.0.3'
+
+  target 'ios-quickeditorTests' do
+    inherit! :search_paths
+  end
+end

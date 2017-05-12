@@ -1,1321 +1,628 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>2130D19A745D333E0BAB22D7</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>29BD41CB1AA7E14D00D19857</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Media.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29BD41CC1AA7E14D00D19857</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29BD41CB1AA7E14D00D19857</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29BD41CD1AA7E14D00D19857</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29BD41CB1AA7E14D00D19857</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A1F51AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A2071AA7BBD700783492</string>
-				<string>29F5A2201AA7BBD700783492</string>
-				<string>29F5A2001AA7BBD700783492</string>
-				<string>29F5A1FF1AA7BBD700783492</string>
-				<string>E484FB5E6EAE6DF562E4DE8C</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A1F61AA7BBD700783492</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>CLASSPREFIX</key>
-				<string>QE</string>
-				<key>LastUpgradeCheck</key>
-				<string>0510</string>
-				<key>ORGANIZATIONNAME</key>
-				<string>Google Developers</string>
-				<key>TargetAttributes</key>
-				<dict>
-					<key>29F5A2181AA7BBD700783492</key>
-					<dict>
-						<key>TestTargetID</key>
-						<string>29F5A1FD1AA7BBD700783492</string>
-					</dict>
-				</dict>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>29F5A1F91AA7BBD700783492</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-			</array>
-			<key>mainGroup</key>
-			<string>29F5A1F51AA7BBD700783492</string>
-			<key>productRefGroup</key>
-			<string>29F5A1FF1AA7BBD700783492</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>29F5A1FD1AA7BBD700783492</string>
-				<string>29F5A2181AA7BBD700783492</string>
-			</array>
-		</dict>
-		<key>29F5A1F91AA7BBD700783492</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>29F5A2281AA7BBD700783492</string>
-				<string>29F5A2291AA7BBD700783492</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>29F5A1FA1AA7BBD700783492</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>29F5A2361AA7C36F00783492</string>
-				<string>29F5A2121AA7BBD700783492</string>
-				<string>29F5A23B1AA7C49700783492</string>
-				<string>29F5A2321AA7C2B500783492</string>
-				<string>29F5A20E1AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>29F5A1FB1AA7BBD700783492</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>29F5A2041AA7BBD700783492</string>
-				<string>29F5A2061AA7BBD700783492</string>
-				<string>29F5A2021AA7BBD700783492</string>
-				<string>91395690E091120F59FDE3B7</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>29F5A1FC1AA7BBD700783492</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>29F5A23E1AA7C82B00783492</string>
-				<string>29F5A20C1AA7BBD700783492</string>
-				<string>29BD41CC1AA7E14D00D19857</string>
-				<string>29F5A2141AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>29F5A1FD1AA7BBD700783492</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>29F5A22A1AA7BBD700783492</string>
-			<key>buildPhases</key>
-			<array>
-				<string>698465DF8F9136D38816A4BB</string>
-				<string>29F5A1FA1AA7BBD700783492</string>
-				<string>29F5A1FB1AA7BBD700783492</string>
-				<string>29F5A1FC1AA7BBD700783492</string>
-				<string>BECB89CF7073B3284B0FA3AA</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>ios-quickeditor</string>
-			<key>productName</key>
-			<string>ios-quickeditor</string>
-			<key>productReference</key>
-			<string>29F5A1FE1AA7BBD700783492</string>
-			<key>productType</key>
-			<string>com.apple.product-type.application</string>
-		</dict>
-		<key>29F5A1FE1AA7BBD700783492</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.application</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>ios-quickeditor.app</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>29F5A1FF1AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A1FE1AA7BBD700783492</string>
-				<string>29F5A2191AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2001AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A2011AA7BBD700783492</string>
-				<string>29F5A2031AA7BBD700783492</string>
-				<string>29F5A2051AA7BBD700783492</string>
-				<string>29F5A21A1AA7BBD700783492</string>
-				<string>2EA1417AA2B38AB75FF12D54</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2011AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Foundation.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/Foundation.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>29F5A2021AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2011AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2031AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CoreGraphics.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/CoreGraphics.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>29F5A2041AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2031AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2051AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>UIKit.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/UIKit.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>29F5A2061AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2051AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2071AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A2101AA7BBD700783492</string>
-				<string>29F5A2111AA7BBD700783492</string>
-				<string>29F5A2131AA7BBD700783492</string>
-				<string>29F5A2081AA7BBD700783492</string>
-				<string>29F5A2301AA7C2B500783492</string>
-				<string>29F5A2311AA7C2B500783492</string>
-				<string>29F5A2341AA7C36F00783492</string>
-				<string>29F5A2351AA7C36F00783492</string>
-				<string>29F5A2381AA7C44500783492</string>
-				<string>29F5A2391AA7C49700783492</string>
-				<string>29F5A23A1AA7C49700783492</string>
-				<string>29F5A23D1AA7C82B00783492</string>
-				<string>29BD41CB1AA7E14D00D19857</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>ios-quickeditor</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2081AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A2091AA7BBD700783492</string>
-				<string>29F5A20A1AA7BBD700783492</string>
-				<string>29F5A20D1AA7BBD700783492</string>
-				<string>29F5A20F1AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2091AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>ios-quickeditor-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A20A1AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A20B1AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A20B1AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A20C1AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A20A1AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A20D1AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>main.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A20E1AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A20D1AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A20F1AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>ios-quickeditor-Prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2101AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>QEAppDelegate.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2111AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>QEAppDelegate.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2121AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2111AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2131AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Images.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2141AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2131AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2151AA7BBD700783492</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>29F5A2331AA7C2B500783492</string>
-				<string>29F5A2271AA7BBD700783492</string>
-				<string>29F5A23C1AA7C49700783492</string>
-				<string>29F5A2371AA7C36F00783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>29F5A2161AA7BBD700783492</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>29F5A21B1AA7BBD700783492</string>
-				<string>29F5A21D1AA7BBD700783492</string>
-				<string>29F5A21C1AA7BBD700783492</string>
-				<string>8B820E3B59DE7C30EC85EEAC</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>29F5A2171AA7BBD700783492</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>29F5A23F1AA7C82B00783492</string>
-				<string>29BD41CD1AA7E14D00D19857</string>
-				<string>29F5A2251AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>29F5A2181AA7BBD700783492</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>29F5A22D1AA7BBD700783492</string>
-			<key>buildPhases</key>
-			<array>
-				<string>2130D19A745D333E0BAB22D7</string>
-				<string>29F5A2151AA7BBD700783492</string>
-				<string>29F5A2161AA7BBD700783492</string>
-				<string>29F5A2171AA7BBD700783492</string>
-				<string>6736D994DC2A3B0DD1C7A707</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>29F5A21F1AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>ios-quickeditorTests</string>
-			<key>productName</key>
-			<string>ios-quickeditorTests</string>
-			<key>productReference</key>
-			<string>29F5A2191AA7BBD700783492</string>
-			<key>productType</key>
-			<string>com.apple.product-type.bundle.unit-test</string>
-		</dict>
-		<key>29F5A2191AA7BBD700783492</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.cfbundle</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>ios-quickeditorTests.xctest</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>29F5A21A1AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>XCTest.framework</string>
-			<key>path</key>
-			<string>Library/Frameworks/XCTest.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>29F5A21B1AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A21A1AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A21C1AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2011AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A21D1AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2051AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A21E1AA7BBD700783492</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>29F5A1F61AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>29F5A1FD1AA7BBD700783492</string>
-			<key>remoteInfo</key>
-			<string>ios-quickeditor</string>
-		</dict>
-		<key>29F5A21F1AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>target</key>
-			<string>29F5A1FD1AA7BBD700783492</string>
-			<key>targetProxy</key>
-			<string>29F5A21E1AA7BBD700783492</string>
-		</dict>
-		<key>29F5A2201AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A2261AA7BBD700783492</string>
-				<string>29F5A2211AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>ios-quickeditorTests</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2211AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A2221AA7BBD700783492</string>
-				<string>29F5A2231AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2221AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>ios-quickeditorTests-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2231AA7BBD700783492</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>29F5A2241AA7BBD700783492</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2241AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2251AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2231AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2261AA7BBD700783492</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>ios_quickeditorTests.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2271AA7BBD700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2261AA7BBD700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2281AA7BBD700783492</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.1</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1,2</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>29F5A2291AA7BBD700783492</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.1</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1,2</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>29F5A22A1AA7BBD700783492</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>29F5A22B1AA7BBD700783492</string>
-				<string>29F5A22C1AA7BBD700783492</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>29F5A22B1AA7BBD700783492</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>9B542E2340F3F3B63F0576C9</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME</key>
-				<string>LaunchImage</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>ios-quickeditor/ios-quickeditor-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>ios-quickeditor/ios-quickeditor-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>29F5A22C1AA7BBD700783492</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>CC2F7BE63867536DA09EF5E2</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME</key>
-				<string>LaunchImage</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>ios-quickeditor/ios-quickeditor-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>ios-quickeditor/ios-quickeditor-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>29F5A22D1AA7BBD700783492</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>29F5A22E1AA7BBD700783492</string>
-				<string>29F5A22F1AA7BBD700783492</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>29F5A22E1AA7BBD700783492</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>9B542E2340F3F3B63F0576C9</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(BUILT_PRODUCTS_DIR)/ios-quickeditor.app/ios-quickeditor</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
-					<string>$(inherited)</string>
-					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
-				</array>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>ios-quickeditor/ios-quickeditor-Prefix.pch</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>ios-quickeditorTests/ios-quickeditorTests-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>TEST_HOST</key>
-				<string>$(BUNDLE_LOADER)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>xctest</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>29F5A22F1AA7BBD700783492</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>CC2F7BE63867536DA09EF5E2</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(BUILT_PRODUCTS_DIR)/ios-quickeditor.app/ios-quickeditor</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
-					<string>$(inherited)</string>
-					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
-				</array>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>ios-quickeditor/ios-quickeditor-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>ios-quickeditorTests/ios-quickeditorTests-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>TEST_HOST</key>
-				<string>$(BUNDLE_LOADER)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>xctest</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>29F5A2301AA7C2B500783492</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>QEUtilities.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2311AA7C2B500783492</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>QEUtilities.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2321AA7C2B500783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2311AA7C2B500783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2331AA7C2B500783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2311AA7C2B500783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2341AA7C36F00783492</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>QEFileEditViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2351AA7C36F00783492</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>QEFileEditViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2361AA7C36F00783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2351AA7C36F00783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2371AA7C36F00783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A2351AA7C36F00783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A2381AA7C44500783492</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>QEFileEditDelegate.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A2391AA7C49700783492</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>QEFilesListViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A23A1AA7C49700783492</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>QEFilesListViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A23B1AA7C49700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A23A1AA7C49700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A23C1AA7C49700783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A23A1AA7C49700783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A23D1AA7C82B00783492</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.storyboard</string>
-			<key>path</key>
-			<string>MainStoryboard.storyboard</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>29F5A23E1AA7C82B00783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A23D1AA7C82B00783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>29F5A23F1AA7C82B00783492</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29F5A23D1AA7C82B00783492</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2EA1417AA2B38AB75FF12D54</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>6736D994DC2A3B0DD1C7A707</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>698465DF8F9136D38816A4BB</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>8B820E3B59DE7C30EC85EEAC</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2EA1417AA2B38AB75FF12D54</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>91395690E091120F59FDE3B7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2EA1417AA2B38AB75FF12D54</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>9B542E2340F3F3B63F0576C9</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods/Pods.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BECB89CF7073B3284B0FA3AA</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>CC2F7BE63867536DA09EF5E2</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods/Pods.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>E484FB5E6EAE6DF562E4DE8C</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>9B542E2340F3F3B63F0576C9</string>
-				<string>CC2F7BE63867536DA09EF5E2</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>29F5A1F61AA7BBD700783492</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2923B2121EC62989005FE7EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2923B2111EC62989005FE7EF /* GoogleService-Info.plist */; };
+		2923B2131EC62992005FE7EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2923B2111EC62989005FE7EF /* GoogleService-Info.plist */; };
+		29BD41CC1AA7E14D00D19857 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29BD41CB1AA7E14D00D19857 /* Media.xcassets */; };
+		29BD41CD1AA7E14D00D19857 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29BD41CB1AA7E14D00D19857 /* Media.xcassets */; };
+		29F5A2021AA7BBD700783492 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F5A2011AA7BBD700783492 /* Foundation.framework */; };
+		29F5A2041AA7BBD700783492 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F5A2031AA7BBD700783492 /* CoreGraphics.framework */; };
+		29F5A2061AA7BBD700783492 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F5A2051AA7BBD700783492 /* UIKit.framework */; };
+		29F5A20C1AA7BBD700783492 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29F5A20A1AA7BBD700783492 /* InfoPlist.strings */; };
+		29F5A20E1AA7BBD700783492 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A20D1AA7BBD700783492 /* main.m */; };
+		29F5A2121AA7BBD700783492 /* QEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A2111AA7BBD700783492 /* QEAppDelegate.m */; };
+		29F5A2141AA7BBD700783492 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29F5A2131AA7BBD700783492 /* Images.xcassets */; };
+		29F5A21B1AA7BBD700783492 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F5A21A1AA7BBD700783492 /* XCTest.framework */; };
+		29F5A21C1AA7BBD700783492 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F5A2011AA7BBD700783492 /* Foundation.framework */; };
+		29F5A21D1AA7BBD700783492 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F5A2051AA7BBD700783492 /* UIKit.framework */; };
+		29F5A2251AA7BBD700783492 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29F5A2231AA7BBD700783492 /* InfoPlist.strings */; };
+		29F5A2271AA7BBD700783492 /* ios_quickeditorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A2261AA7BBD700783492 /* ios_quickeditorTests.m */; };
+		29F5A2321AA7C2B500783492 /* QEUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A2311AA7C2B500783492 /* QEUtilities.m */; };
+		29F5A2331AA7C2B500783492 /* QEUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A2311AA7C2B500783492 /* QEUtilities.m */; };
+		29F5A2361AA7C36F00783492 /* QEFileEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A2351AA7C36F00783492 /* QEFileEditViewController.m */; };
+		29F5A2371AA7C36F00783492 /* QEFileEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A2351AA7C36F00783492 /* QEFileEditViewController.m */; };
+		29F5A23B1AA7C49700783492 /* QEFilesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A23A1AA7C49700783492 /* QEFilesListViewController.m */; };
+		29F5A23C1AA7C49700783492 /* QEFilesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F5A23A1AA7C49700783492 /* QEFilesListViewController.m */; };
+		29F5A23E1AA7C82B00783492 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29F5A23D1AA7C82B00783492 /* MainStoryboard.storyboard */; };
+		29F5A23F1AA7C82B00783492 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29F5A23D1AA7C82B00783492 /* MainStoryboard.storyboard */; };
+		316BC400B032F99C7AEBB7A7 /* libPods-ios-quickeditor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59BAA783534D42231D44D325 /* libPods-ios-quickeditor.a */; };
+		826127051C2F98AB2A95B0FB /* libPods-ios-quickeditorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F13FB107BFB753ED2BBDCA8 /* libPods-ios-quickeditorTests.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		29F5A21E1AA7BBD700783492 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29F5A1F61AA7BBD700783492 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29F5A1FD1AA7BBD700783492;
+			remoteInfo = "ios-quickeditor";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1C236F31B17CF2E442DD35DE /* Pods-ios-quickeditorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-quickeditorTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-quickeditorTests/Pods-ios-quickeditorTests.release.xcconfig"; sourceTree = "<group>"; };
+		2923B2111EC62989005FE7EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		29BD41CB1AA7E14D00D19857 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		29F5A1FE1AA7BBD700783492 /* ios-quickeditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-quickeditor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29F5A2011AA7BBD700783492 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		29F5A2031AA7BBD700783492 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		29F5A2051AA7BBD700783492 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		29F5A2091AA7BBD700783492 /* ios-quickeditor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ios-quickeditor-Info.plist"; sourceTree = "<group>"; };
+		29F5A20B1AA7BBD700783492 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		29F5A20D1AA7BBD700783492 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29F5A20F1AA7BBD700783492 /* ios-quickeditor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ios-quickeditor-Prefix.pch"; sourceTree = "<group>"; };
+		29F5A2101AA7BBD700783492 /* QEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QEAppDelegate.h; sourceTree = "<group>"; };
+		29F5A2111AA7BBD700783492 /* QEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QEAppDelegate.m; sourceTree = "<group>"; };
+		29F5A2131AA7BBD700783492 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		29F5A2191AA7BBD700783492 /* ios-quickeditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-quickeditorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29F5A21A1AA7BBD700783492 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		29F5A2221AA7BBD700783492 /* ios-quickeditorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ios-quickeditorTests-Info.plist"; sourceTree = "<group>"; };
+		29F5A2241AA7BBD700783492 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		29F5A2261AA7BBD700783492 /* ios_quickeditorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ios_quickeditorTests.m; sourceTree = "<group>"; };
+		29F5A2301AA7C2B500783492 /* QEUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QEUtilities.h; sourceTree = "<group>"; };
+		29F5A2311AA7C2B500783492 /* QEUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QEUtilities.m; sourceTree = "<group>"; };
+		29F5A2341AA7C36F00783492 /* QEFileEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QEFileEditViewController.h; sourceTree = "<group>"; };
+		29F5A2351AA7C36F00783492 /* QEFileEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QEFileEditViewController.m; sourceTree = "<group>"; };
+		29F5A2381AA7C44500783492 /* QEFileEditDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QEFileEditDelegate.h; sourceTree = "<group>"; };
+		29F5A2391AA7C49700783492 /* QEFilesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QEFilesListViewController.h; sourceTree = "<group>"; };
+		29F5A23A1AA7C49700783492 /* QEFilesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QEFilesListViewController.m; sourceTree = "<group>"; };
+		29F5A23D1AA7C82B00783492 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		59BAA783534D42231D44D325 /* libPods-ios-quickeditor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios-quickeditor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F13FB107BFB753ED2BBDCA8 /* libPods-ios-quickeditorTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios-quickeditorTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADA180A255439E55A8834B7C /* Pods-ios-quickeditorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-quickeditorTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-quickeditorTests/Pods-ios-quickeditorTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C6B067E3B1B72AA7EBC1B20E /* Pods-ios-quickeditor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-quickeditor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-quickeditor/Pods-ios-quickeditor.debug.xcconfig"; sourceTree = "<group>"; };
+		E6BF8EF8D1FFE9DC91CA43D4 /* Pods-ios-quickeditor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-quickeditor.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-quickeditor/Pods-ios-quickeditor.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		29F5A1FB1AA7BBD700783492 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29F5A2041AA7BBD700783492 /* CoreGraphics.framework in Frameworks */,
+				29F5A2061AA7BBD700783492 /* UIKit.framework in Frameworks */,
+				29F5A2021AA7BBD700783492 /* Foundation.framework in Frameworks */,
+				316BC400B032F99C7AEBB7A7 /* libPods-ios-quickeditor.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29F5A2161AA7BBD700783492 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29F5A21B1AA7BBD700783492 /* XCTest.framework in Frameworks */,
+				29F5A21D1AA7BBD700783492 /* UIKit.framework in Frameworks */,
+				29F5A21C1AA7BBD700783492 /* Foundation.framework in Frameworks */,
+				826127051C2F98AB2A95B0FB /* libPods-ios-quickeditorTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1B31AE9BB120D83E2A1E20C1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C6B067E3B1B72AA7EBC1B20E /* Pods-ios-quickeditor.debug.xcconfig */,
+				E6BF8EF8D1FFE9DC91CA43D4 /* Pods-ios-quickeditor.release.xcconfig */,
+				ADA180A255439E55A8834B7C /* Pods-ios-quickeditorTests.debug.xcconfig */,
+				1C236F31B17CF2E442DD35DE /* Pods-ios-quickeditorTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		29F5A1F51AA7BBD700783492 = {
+			isa = PBXGroup;
+			children = (
+				29F5A2071AA7BBD700783492 /* ios-quickeditor */,
+				29F5A2201AA7BBD700783492 /* ios-quickeditorTests */,
+				29F5A2001AA7BBD700783492 /* Frameworks */,
+				29F5A1FF1AA7BBD700783492 /* Products */,
+				1B31AE9BB120D83E2A1E20C1 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		29F5A1FF1AA7BBD700783492 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				29F5A1FE1AA7BBD700783492 /* ios-quickeditor.app */,
+				29F5A2191AA7BBD700783492 /* ios-quickeditorTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29F5A2001AA7BBD700783492 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29F5A2011AA7BBD700783492 /* Foundation.framework */,
+				29F5A2031AA7BBD700783492 /* CoreGraphics.framework */,
+				29F5A2051AA7BBD700783492 /* UIKit.framework */,
+				29F5A21A1AA7BBD700783492 /* XCTest.framework */,
+				59BAA783534D42231D44D325 /* libPods-ios-quickeditor.a */,
+				9F13FB107BFB753ED2BBDCA8 /* libPods-ios-quickeditorTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		29F5A2071AA7BBD700783492 /* ios-quickeditor */ = {
+			isa = PBXGroup;
+			children = (
+				2923B2111EC62989005FE7EF /* GoogleService-Info.plist */,
+				29F5A2101AA7BBD700783492 /* QEAppDelegate.h */,
+				29F5A2111AA7BBD700783492 /* QEAppDelegate.m */,
+				29F5A2131AA7BBD700783492 /* Images.xcassets */,
+				29F5A2081AA7BBD700783492 /* Supporting Files */,
+				29F5A2301AA7C2B500783492 /* QEUtilities.h */,
+				29F5A2311AA7C2B500783492 /* QEUtilities.m */,
+				29F5A2341AA7C36F00783492 /* QEFileEditViewController.h */,
+				29F5A2351AA7C36F00783492 /* QEFileEditViewController.m */,
+				29F5A2381AA7C44500783492 /* QEFileEditDelegate.h */,
+				29F5A2391AA7C49700783492 /* QEFilesListViewController.h */,
+				29F5A23A1AA7C49700783492 /* QEFilesListViewController.m */,
+				29F5A23D1AA7C82B00783492 /* MainStoryboard.storyboard */,
+				29BD41CB1AA7E14D00D19857 /* Media.xcassets */,
+			);
+			path = "ios-quickeditor";
+			sourceTree = "<group>";
+		};
+		29F5A2081AA7BBD700783492 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				29F5A2091AA7BBD700783492 /* ios-quickeditor-Info.plist */,
+				29F5A20A1AA7BBD700783492 /* InfoPlist.strings */,
+				29F5A20D1AA7BBD700783492 /* main.m */,
+				29F5A20F1AA7BBD700783492 /* ios-quickeditor-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		29F5A2201AA7BBD700783492 /* ios-quickeditorTests */ = {
+			isa = PBXGroup;
+			children = (
+				29F5A2261AA7BBD700783492 /* ios_quickeditorTests.m */,
+				29F5A2211AA7BBD700783492 /* Supporting Files */,
+			);
+			path = "ios-quickeditorTests";
+			sourceTree = "<group>";
+		};
+		29F5A2211AA7BBD700783492 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				29F5A2221AA7BBD700783492 /* ios-quickeditorTests-Info.plist */,
+				29F5A2231AA7BBD700783492 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		29F5A1FD1AA7BBD700783492 /* ios-quickeditor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29F5A22A1AA7BBD700783492 /* Build configuration list for PBXNativeTarget "ios-quickeditor" */;
+			buildPhases = (
+				54DCA22D13A938C128CE8319 /* [CP] Check Pods Manifest.lock */,
+				29F5A1FA1AA7BBD700783492 /* Sources */,
+				29F5A1FB1AA7BBD700783492 /* Frameworks */,
+				29F5A1FC1AA7BBD700783492 /* Resources */,
+				3702B55E09A7F91B205A2495 /* [CP] Embed Pods Frameworks */,
+				74337FAE1BFE19C595B2A80F /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ios-quickeditor";
+			productName = "ios-quickeditor";
+			productReference = 29F5A1FE1AA7BBD700783492 /* ios-quickeditor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		29F5A2181AA7BBD700783492 /* ios-quickeditorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29F5A22D1AA7BBD700783492 /* Build configuration list for PBXNativeTarget "ios-quickeditorTests" */;
+			buildPhases = (
+				FE70D94FA9D2F77B1C5548BB /* [CP] Check Pods Manifest.lock */,
+				29F5A2151AA7BBD700783492 /* Sources */,
+				29F5A2161AA7BBD700783492 /* Frameworks */,
+				29F5A2171AA7BBD700783492 /* Resources */,
+				A5EC80A052EE58195275DF45 /* [CP] Embed Pods Frameworks */,
+				4A8A47FB7145CDF69E8D70E2 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				29F5A21F1AA7BBD700783492 /* PBXTargetDependency */,
+			);
+			name = "ios-quickeditorTests";
+			productName = "ios-quickeditorTests";
+			productReference = 29F5A2191AA7BBD700783492 /* ios-quickeditorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29F5A1F61AA7BBD700783492 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = QE;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Google Developers";
+				TargetAttributes = {
+					29F5A2181AA7BBD700783492 = {
+						TestTargetID = 29F5A1FD1AA7BBD700783492;
+					};
+				};
+			};
+			buildConfigurationList = 29F5A1F91AA7BBD700783492 /* Build configuration list for PBXProject "ios-quickeditor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29F5A1F51AA7BBD700783492;
+			productRefGroup = 29F5A1FF1AA7BBD700783492 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				29F5A1FD1AA7BBD700783492 /* ios-quickeditor */,
+				29F5A2181AA7BBD700783492 /* ios-quickeditorTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		29F5A1FC1AA7BBD700783492 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29F5A23E1AA7C82B00783492 /* MainStoryboard.storyboard in Resources */,
+				29F5A20C1AA7BBD700783492 /* InfoPlist.strings in Resources */,
+				2923B2121EC62989005FE7EF /* GoogleService-Info.plist in Resources */,
+				29BD41CC1AA7E14D00D19857 /* Media.xcassets in Resources */,
+				29F5A2141AA7BBD700783492 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29F5A2171AA7BBD700783492 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29F5A23F1AA7C82B00783492 /* MainStoryboard.storyboard in Resources */,
+				2923B2131EC62992005FE7EF /* GoogleService-Info.plist in Resources */,
+				29BD41CD1AA7E14D00D19857 /* Media.xcassets in Resources */,
+				29F5A2251AA7BBD700783492 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3702B55E09A7F91B205A2495 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios-quickeditor/Pods-ios-quickeditor-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4A8A47FB7145CDF69E8D70E2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios-quickeditorTests/Pods-ios-quickeditorTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		54DCA22D13A938C128CE8319 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		74337FAE1BFE19C595B2A80F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios-quickeditor/Pods-ios-quickeditor-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5EC80A052EE58195275DF45 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios-quickeditorTests/Pods-ios-quickeditorTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE70D94FA9D2F77B1C5548BB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		29F5A1FA1AA7BBD700783492 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29F5A2361AA7C36F00783492 /* QEFileEditViewController.m in Sources */,
+				29F5A2121AA7BBD700783492 /* QEAppDelegate.m in Sources */,
+				29F5A23B1AA7C49700783492 /* QEFilesListViewController.m in Sources */,
+				29F5A2321AA7C2B500783492 /* QEUtilities.m in Sources */,
+				29F5A20E1AA7BBD700783492 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29F5A2151AA7BBD700783492 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29F5A2331AA7C2B500783492 /* QEUtilities.m in Sources */,
+				29F5A2271AA7BBD700783492 /* ios_quickeditorTests.m in Sources */,
+				29F5A23C1AA7C49700783492 /* QEFilesListViewController.m in Sources */,
+				29F5A2371AA7C36F00783492 /* QEFileEditViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		29F5A21F1AA7BBD700783492 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29F5A1FD1AA7BBD700783492 /* ios-quickeditor */;
+			targetProxy = 29F5A21E1AA7BBD700783492 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		29F5A20A1AA7BBD700783492 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29F5A20B1AA7BBD700783492 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29F5A2231AA7BBD700783492 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29F5A2241AA7BBD700783492 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		29F5A2281AA7BBD700783492 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		29F5A2291AA7BBD700783492 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		29F5A22B1AA7BBD700783492 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6B067E3B1B72AA7EBC1B20E /* Pods-ios-quickeditor.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ios-quickeditor/ios-quickeditor-Prefix.pch";
+				INFOPLIST_FILE = "ios-quickeditor/ios-quickeditor-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		29F5A22C1AA7BBD700783492 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6BF8EF8D1FFE9DC91CA43D4 /* Pods-ios-quickeditor.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ios-quickeditor/ios-quickeditor-Prefix.pch";
+				INFOPLIST_FILE = "ios-quickeditor/ios-quickeditor-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		29F5A22E1AA7BBD700783492 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADA180A255439E55A8834B7C /* Pods-ios-quickeditorTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ios-quickeditor.app/ios-quickeditor";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ios-quickeditor/ios-quickeditor-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ios-quickeditorTests/ios-quickeditorTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		29F5A22F1AA7BBD700783492 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C236F31B17CF2E442DD35DE /* Pods-ios-quickeditorTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ios-quickeditor.app/ios-quickeditor";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ios-quickeditor/ios-quickeditor-Prefix.pch";
+				INFOPLIST_FILE = "ios-quickeditorTests/ios-quickeditorTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		29F5A1F91AA7BBD700783492 /* Build configuration list for PBXProject "ios-quickeditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29F5A2281AA7BBD700783492 /* Debug */,
+				29F5A2291AA7BBD700783492 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29F5A22A1AA7BBD700783492 /* Build configuration list for PBXNativeTarget "ios-quickeditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29F5A22B1AA7BBD700783492 /* Debug */,
+				29F5A22C1AA7BBD700783492 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29F5A22D1AA7BBD700783492 /* Build configuration list for PBXNativeTarget "ios-quickeditorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29F5A22E1AA7BBD700783492 /* Debug */,
+				29F5A22F1AA7BBD700783492 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29F5A1F61AA7BBD700783492 /* Project object */;
+}
