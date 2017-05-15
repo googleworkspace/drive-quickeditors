@@ -35,6 +35,9 @@ To run this sample, you'll need:
         git clone git@github.com:googledrive/ios-quickeditor.git
         cd ios-quickeditor
 1. Open `ios-quickeditor/ios-quickeditor.xcworkspace` in Xcode
-1. Repace `GoogleService-Info.plist` with the file you previously downloaded
+1. Replace `GoogleService-Info.plist` with the file you previously downloaded
+1. Add the URL scheme in `ios-quickeditor-Info.plist`  with your reversed client ID.
+  2. Open your project configuration: double-click the project name in the left tree view. Select your app from the TARGETS section, then select the Info tab, and expand the URL Types section.
+  2. Click the + button, and add a URL scheme for your reversed client ID. To find this value, open the GoogleService-Info.plist configuration file, and look for the REVERSED_CLIENT_ID key. Copy the value of that key, and paste it into the URL Schemes box on the configuration page. Leave the other fields blank.
 1. Build the project and run it on the iOS simulator.
 
