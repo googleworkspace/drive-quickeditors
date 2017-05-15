@@ -1,0 +1,16 @@
+<md-dialog>
+  <md-content layout-padding layout="row" layout-sm="column">
+    <md-input-container>
+      <label>Title</label>
+      <input ng-model="form.title">
+    </md-input-container>
+  </md-content>
+  <div class="md-actions" layout="row" layout-align="center center">
+    <md-button ng-click="ctrl.cancel()">
+      Cancel
+    </md-button>
+    <md-button ng-click="ctrl.save()">
+      Save
+    </md-button>
+  </div>
+</md-dialog>

@@ -1,3 +1,50 @@
-<!doctype html><html class="no-js" ng-app="editor"><head><meta charset="utf-8"><title>editor</title><meta name="description" content=""><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="styles/vendor-190d52d7.css"><link rel="stylesheet" href="styles/app-4b007db9.css"></head><body layout="column"><div flex="" layout-fill="" layout="column" ng-view=""></div><script src="scripts/vendor-1f7e01c5.js"></script><script src="scripts/app-811b2eb1.js"></script><script type="text/javascript">
+<!doctype html>
+<html class="no-js" ng-app="editor">
+  <head>
+    <meta charset="utf-8">
+    <title>editor</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/xq-light.css">
+    <link rel="stylesheet" href="bower_components/mdi/css/materialdesignicons.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  </head>
+  <body layout=column>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div flex layout-fill layout=column ng-view></div>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+    <script type="text/javascript" src="components/gapi/gapi.js"></script>
+    <script type="text/javascript" src="components/drive/drive.service.js"></script>
+    <script type="text/javascript" src="components/drive/multipart.js"></script>
+    <script type="text/javascript" src="components/login/login.controller.js"></script>
+    <script type="text/javascript" src="components/login/login.service.js"></script>
+    <script type="text/javascript" src="components/rename/rename.controller.js"></script>
+    <script type="text/javascript" src="components/rename/renameDialog.service.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="main/main.controller.js"></script>
+
+    <script type="text/javascript">
     console.log("About to load GAPI");
-    </script><script src="https://apis.google.com/js/drive-share:picker:client:platform.js?onload=on_gapi_loaded"></script></body></html>
+    </script>
+    <script src="https://apis.google.com/js/drive-share:picker:client:platform.js?onload=on_gapi_loaded"></script>
+  </body>
+</html>
