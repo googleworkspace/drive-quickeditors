@@ -15,24 +15,20 @@
  */
 #import <UIKit/UIKit.h>
 #import "QEFileEditDelegate.h"
-#import "GTMOAuth2ViewControllerTouch.h"
+#import <Google/SignIn.h>
+#import <GTLRDrive.h>
 
-@interface QEFilesListViewController : UITableViewController <QEFileEditDelegate>
+@interface QEFilesListViewController : UITableViewController <QEFileEditDelegate, GIDSignInDelegate, GIDSignInUIDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *authButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 
-@property (weak, readonly) GTLServiceDrive *driveService;
+@property (retain) GTLRDriveService *driveService;
 @property (retain) NSMutableArray *driveFiles;
-@property BOOL isAuthorized;
 
 - (IBAction)signoutButtonClicked:(id)sender;
 - (IBAction)refreshButtonClicked:(id)sender;
 
 - (void)toggleActionButtons:(BOOL)enabled;
-- (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController
-      finishedWithAuth:(GTMOAuth2Authentication *)auth
-                 error:(NSError *)error;
-- (void)isAuthorizedWithAuthentication:(GTMOAuth2Authentication *)auth;
 - (void)loadDriveFiles;
 @end

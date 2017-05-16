@@ -36,7 +36,7 @@
     if (self.fileIndex == -1) {
         self.fileTitle = @"New file";
     } else {
-        self.fileTitle = self.driveFile.title;
+        self.fileTitle = self.driveFile.name;
     }
     
     self.title = self.fileTitle;
@@ -110,65 +110,78 @@
 - (void)loadFileContent {
     UIAlertView *alert = [QEUtilities showLoadingMessageWithTitle:@"Loading file content"
                                                              delegate:self];
-    GTMHTTPFetcher *fetcher =
-    [self.driveService.fetcherService fetcherWithURLString:self.driveFile.downloadUrl];
-    
-    [fetcher beginFetchWithCompletionHandler:^(NSData *data, NSError *error) {
-        [alert dismissWithClickedButtonIndex:0 animated:YES];
-        if (error == nil) {
-            NSString* fileContent = [[NSString alloc] initWithData:data
-                                                          encoding:NSUTF8StringEncoding];
-            self.textView.text = fileContent;
-            self.originalContent = [fileContent copy];
-        } else {
-            NSLog(@"An error occurred: %@", error);
-            [QEUtilities showErrorMessageWithTitle:@"Unable to load file"
+    GTLRQuery *query = [GTLRDriveQuery_FilesGet queryForMediaWithFileId:self.driveFile.identifier];
+
+    [self.driveService executeQuery:query
+        completionHandler:^(GTLRServiceTicket *callbackTicket,
+                            GTLRDataObject *dataObject,
+                            NSError *error) {
+            [alert dismissWithClickedButtonIndex:0 animated:YES];
+            if (error == nil) {
+                NSString* fileContent = [[NSString alloc] initWithData:dataObject.data
+                                                              encoding:NSUTF8StringEncoding];
+                self.textView.text = fileContent;
+                self.originalContent = [fileContent copy];
+            } else {
+                NSLog(@"An error occurred: %@", error);
+                [QEUtilities showErrorMessageWithTitle:@"Unable to load file"
                                                message:[error description]
                                               delegate:self];
-        }
-    }];
+            }
+        }];
 }
 
 - (void)saveFile {
-    GTLUploadParameters *uploadParameters = nil;
+    GTLRUploadParameters *uploadParameters = nil;
     
     // Only update the file content if different.
     if (![self.originalContent isEqualToString:self.textView.text]) {
         NSData *fileContent =
         [self.textView.text dataUsingEncoding:NSUTF8StringEncoding];
-        uploadParameters =
-        [GTLUploadParameters uploadParametersWithData:fileContent MIMEType:@"text/plain"];
+        uploadParameters = [GTLRUploadParameters uploadParametersWithData:fileContent MIMEType:@"text/plain"];
     }
     
-    self.driveFile.title = self.fileTitle;
-    GTLQueryDrive *query = nil;
+    GTLRDrive_File *metadata = [[GTLRDrive_File alloc] init];
+    metadata.name = self.fileTitle;
+    metadata.mimeType = @"text/plain";
+    
+    GTLRDriveQuery *query = nil;
     if (self.driveFile.identifier == nil || self.driveFile.identifier.length == 0) {
         // This is a new file, instantiate an insert query.
-        query = [GTLQueryDrive queryForFilesInsertWithObject:self.driveFile
+        query = [GTLRDriveQuery_FilesCreate queryWithObject:metadata
                                             uploadParameters:uploadParameters];
     } else {
         // This file already exists, instantiate an update query.
-        query = [GTLQueryDrive queryForFilesUpdateWithObject:self.driveFile
-                                                      fileId:self.driveFile.identifier
+        query = [GTLRDriveQuery_FilesUpdate queryWithObject:metadata
+                                                     fileId:self.driveFile.identifier
                                             uploadParameters:uploadParameters];
     }
+    query.fields = @"id,name,modifiedTime,mimeType";
     UIAlertView *alert = [QEUtilities showLoadingMessageWithTitle:@"Saving file"
                                                              delegate:self];
     
-    [self.driveService executeQuery:query completionHandler:^(GTLServiceTicket *ticket,
-                                                              GTLDriveFile *updatedFile,
-                                                              NSError *error) {
+    [self.driveService executeQuery:query
+                  completionHandler:^(GTLRServiceTicket *ticket,
+                                     GTLRDrive_File *updatedFile,
+                                     NSError *error) {
         [alert dismissWithClickedButtonIndex:0 animated:YES];
         if (error == nil) {
             self.driveFile = updatedFile;
             self.originalContent = [self.textView.text copy];
-            self.fileTitle = [updatedFile.title copy];
+            self.fileTitle = [updatedFile.name copy];
             [self toggleSaveButton];
             [self.delegate didUpdateFileWithIndex:self.fileIndex
                                         driveFile:self.driveFile];
             [self doneEditing:nil];
         } else {
-            NSLog(@"An error occurred: %@", error);
+            NSLog(@"Error: %@", error);
+            NSDictionary *errorInfo = [error userInfo];
+            NSData *errData = errorInfo[kGTMSessionFetcherStatusDataKey];
+            if (errData) {
+                NSString *dataStr = [[NSString alloc] initWithData:errData
+                                                          encoding:NSUTF8StringEncoding];
+                NSLog(@"Details: %@", dataStr);
+            }
             [QEUtilities showErrorMessageWithTitle:@"Unable to save file"
                                                message:[error description]
                                               delegate:self];
@@ -177,14 +190,13 @@
 }
 
 - (void)deleteFile {
-    GTLQueryDrive *deleteQuery =
-    [GTLQueryDrive queryForFilesDeleteWithFileId:self.driveFile.identifier];
+    GTLRDriveQuery *deleteQuery = [GTLRDriveQuery_FilesDelete queryWithFileId:self.driveFile.identifier];
     UIAlertView *alert = [QEUtilities showLoadingMessageWithTitle:@"Deleting file"
                                                              delegate:self];
     
-    [self.driveService executeQuery:deleteQuery completionHandler:^(GTLServiceTicket *ticket,
-                                                                    id object,
-                                                                    NSError *error) {
+    [self.driveService executeQuery:deleteQuery completionHandler:^(GTLRServiceTicket *ticket,
+                            id object,
+                            NSError *error) {
         [alert dismissWithClickedButtonIndex:0 animated:YES];
         if (error == nil) {
             self.fileIndex = [self.delegate didUpdateFileWithIndex:self.fileIndex
@@ -203,6 +215,6 @@
     self.saveButton.enabled = 
     self.textView.text.length > 0 &&
     (![self.originalContent isEqualToString:self.textView.text] ||
-     ![self.fileTitle isEqualToString:self.driveFile.title]);
+     ![self.fileTitle isEqualToString:self.driveFile.name]);
 }
 @end
