@@ -1,5 +1,3 @@
-// Copyright 2013 Google Inc. All Rights Reserved.
-
 /**
  * Copyright 2013 Google Inc. All Rights Reserved.
  *
@@ -18,21 +16,27 @@ package com.google.android.gms.drive.sample.quickeditor.tasks;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.DriveContentsResult;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource.MetadataResult;
+import com.google.android.gms.drive.DriveResourceClient;
 import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.tasks.Tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * An async task to open, make changes to and close a file.
  */
 public abstract class EditDriveFileAsyncTask
-        extends AsyncTask<DriveId, Boolean, com.google.android.gms.common.api.Status> {
+        extends AsyncTask<DriveId, Boolean, Boolean> {
 
     /**
      * Represents the delta of the metadata changes and keeps a pointer to the file
@@ -58,15 +62,15 @@ public abstract class EditDriveFileAsyncTask
 
     private static final String TAG = "EditDriveFileAsyncTask";
 
-    private GoogleApiClient mClient;
+    private DriveResourceClient driveResourceClient;
 
     /**
      * Constructor.
      *
-     * @param client A connected {@code GoogleApiClient} instance.
+     * @param driveResourceClient A connected {@link DriveResourceClient} instance.
      */
-    public EditDriveFileAsyncTask(GoogleApiClient client) {
-        mClient = client;
+    public EditDriveFileAsyncTask(DriveResourceClient driveResourceClient) {
+        this.driveResourceClient = driveResourceClient;
     }
 
     /**
@@ -79,30 +83,28 @@ public abstract class EditDriveFileAsyncTask
      * metadata and content changes.
      */
     @Override
-    protected com.google.android.gms.common.api.Status doInBackground(DriveId... params) {
+    protected Boolean doInBackground(DriveId... params) {
         DriveFile file = params[0].asDriveFile();
-        PendingResult<DriveContentsResult> openDriveContentsResult =
-                file.open(mClient, DriveFile.MODE_WRITE_ONLY, null);
-        if (!openDriveContentsResult.await().getStatus().isSuccess()) {
-            return openDriveContentsResult.await().getStatus();
-        }
+        try {
+            DriveContents contents =
+                Tasks.await(driveResourceClient.openFile(file, DriveFile.MODE_WRITE_ONLY));
 
-        Changes changes = edit(openDriveContentsResult.await().getDriveContents());
-        PendingResult<MetadataResult> metadataResult = null;
-        PendingResult<com.google.android.gms.common.api.Status>
-                closeContentsResult = null;
+            Changes changes = edit(contents);
+            MetadataChangeSet changeSet = changes.getMetadataChangeSet();
+            DriveContents updatedContents = changes.getDriveContents();
 
-        if (changes.getMetadataChangeSet() != null) {
-            metadataResult = file.updateMetadata(mClient, changes.getMetadataChangeSet());
-            if (!metadataResult.await().getStatus().isSuccess()) {
-                return metadataResult.await().getStatus();
+            if (changeSet != null) {
+                Tasks.await(driveResourceClient.updateMetadata(file, changeSet));
             }
+
+            if (updatedContents != null) {
+                Tasks.await(driveResourceClient.commitContents(updatedContents, changeSet));
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e(TAG, "Error editing DriveFile.", e);
+            return false;
         }
 
-        if (changes.getDriveContents() != null) {
-            closeContentsResult = changes.getDriveContents().commit(mClient, null);
-            closeContentsResult.await();
-        }
-        return closeContentsResult.await().getStatus();
+        return true;
     }
 }

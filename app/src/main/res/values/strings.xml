@@ -29,6 +29,7 @@
     <string name="msg_errconnect">An error occoured while trying to connect.</string>
     <string name="msg_errretrieval">An error occoured while retrieving the file.</string>
     <string name="msg_errsaving">An error occoured while saving.</string>
+    <string name="msg_errreading">An error occured while reading the file contents.</string>
     <string name="msg_saved">Successfully saved.</string>
 
 </resources>

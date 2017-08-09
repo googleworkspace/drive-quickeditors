@@ -14,24 +14,26 @@
 
 package com.google.android.gms.drive.sample.quickeditor;
 
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi.DriveContentsResult;
+import com.google.android.gms.drive.CreateFileActivityOptions;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.DriveResource.MetadataResult;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
+import com.google.android.gms.drive.OpenFileActivityOptions;
 import com.google.android.gms.drive.sample.quickeditor.tasks.EditDriveFileAsyncTask;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,25 +45,27 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Collections;
 
 /**
- * An activity lets you open/create a Drive text file and modify.
+ * An activity that lets you open/create a Drive text file and modify it.
  */
 public class HomeActivity extends BaseDriveActivity {
 
     private static final String TAG = "MainActivity";
 
     /**
-     * Request code for creator activity.
+     * Request code for file creator activity.
      */
     private static final int REQUEST_CODE_CREATOR = NEXT_AVAILABLE_REQUEST_CODE;
+
     /**
-     * Request code for the opener activity.
+     * Request code for the file opener activity.
      */
     private static final int REQUEST_CODE_OPENER = NEXT_AVAILABLE_REQUEST_CODE + 1;
 
     /**
-     * Text file mimetype.
+     * Text file MIME type.
      */
     private static final String MIME_TYPE_TEXT = "text/plain";
 
@@ -69,10 +73,12 @@ public class HomeActivity extends BaseDriveActivity {
      * Title edit text field.
      */
     private EditText mTitleEditText;
+
     /**
      * Body edit text field.
      */
     private EditText mContentsEditText;
+
     /**
      * Save button. Invokes the upsert tasks on click.
      */
@@ -82,10 +88,12 @@ public class HomeActivity extends BaseDriveActivity {
      * Drive ID of the currently opened Drive file.
      */
     private DriveId mCurrentDriveId;
+
     /**
      * Currently opened file's metadata.
      */
     private Metadata mMetadata;
+
     /**
      * Currently opened file's contents.
      */
@@ -105,7 +113,7 @@ public class HomeActivity extends BaseDriveActivity {
                 save();
             }
         });
-        refresh();
+        refreshUiFromCurrentFile();
     }
 
     @Override
@@ -116,74 +124,26 @@ public class HomeActivity extends BaseDriveActivity {
     }
 
     @Override
-    public void onConnected(Bundle connectionHint) {
-        super.onConnected(connectionHint);
-        refresh();
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult result) {
-        super.onConnectionFailed(result);
-        showToast(R.string.msg_errconnect);
-    }
-
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_new) {
-            ResultCallback<DriveContentsResult> onContentsCallback =
-                    new ResultCallback<DriveContentsResult>() {
-                @Override
-                public void onResult(DriveContentsResult result) {
-                    // TODO: error handling in case of failure
-                    MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
-                            .setMimeType(MIME_TYPE_TEXT).build();
-                    IntentSender createIntentSender = Drive.DriveApi
-                            .newCreateFileActivityBuilder()
-                            .setInitialMetadata(metadataChangeSet)
-                            .setInitialDriveContents(result.getDriveContents())
-                            .build(mGoogleApiClient);
-                    try {
-                        startIntentSenderForResult(createIntentSender, REQUEST_CODE_CREATOR, null,
-                                0, 0, 0);
-                    } catch (SendIntentException e) {
-                        Log.w(TAG, "Unable to send intent", e);
-                    }
-                }
-            };
-            Drive.DriveApi.newDriveContents(mGoogleApiClient).setResultCallback(onContentsCallback);
+            Log.i(TAG, "Create file selected.");
+            createDriveFile();
         } else if (item.getItemId() == R.id.menu_open) {
-            IntentSender i = Drive.DriveApi
-                    .newOpenFileActivityBuilder()
-                    .setMimeType(new String[] { MIME_TYPE_TEXT })
-                    .build(mGoogleApiClient);
-            try {
-                startIntentSenderForResult(i, REQUEST_CODE_OPENER, null, 0, 0, 0);
-            } catch (SendIntentException e) {
-                Log.w(TAG, "Unable to send intent", e);
-            }
+            Log.i(TAG, "Open file selected.");
+            openDriveFile();
         }
-        return super.onMenuItemSelected(featureId, item);
+        return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Handles activity results for creator and the opener activities.
-     */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-            Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_CREATOR:
-                if (resultCode == RESULT_OK) {
-                    mCurrentDriveId = (DriveId) data.getParcelableExtra(
-                            OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-                    refresh();
-                }
-                break;
             case REQUEST_CODE_OPENER:
                 if (resultCode == RESULT_OK) {
                     mCurrentDriveId = (DriveId) data.getParcelableExtra(
                             OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-                    get();
+                    loadCurrentFile();
                 }
                 break;
             default:
@@ -194,7 +154,7 @@ public class HomeActivity extends BaseDriveActivity {
     /**
      * Refreshes the main content view with the current activity state.
      */
-    private void refresh() {
+    private void refreshUiFromCurrentFile() {
         Log.d(TAG, "Refreshing...");
         if (mCurrentDriveId == null) {
             mSaveButton.setEnabled(false);
@@ -211,37 +171,61 @@ public class HomeActivity extends BaseDriveActivity {
             String contents = Utils.readFromInputStream(mDriveContents.getInputStream());
             mContentsEditText.setText(contents);
         } catch (IOException e) {
-            // TODO: handle it better, at least an error message
             Log.e(TAG, "IOException while reading from contents input stream", e);
+            showToast(R.string.msg_errreading);
+            mSaveButton.setEnabled(false);
         }
     }
 
     /**
-     * Retrieves the currently selected Drive file's meta data and contents.
+     * Retrieves the currently selected Drive file's metadata and contents.
      */
-    private void get() {
+    private void loadCurrentFile() {
         Log.d(TAG, "Retrieving...");
-        DriveFile file = mCurrentDriveId.asDriveFile();
-        final PendingResult<MetadataResult>
-                metadataResult = file.getMetadata(mGoogleApiClient);
-        final PendingResult<DriveContentsResult>
-                contentsResult = file.open(mGoogleApiClient,
-                DriveFile.MODE_READ_ONLY | DriveFile.MODE_WRITE_ONLY, null);
+        final DriveFile file = mCurrentDriveId.asDriveFile();
+
+        // Retrieve and store the file metadata and contents.
+        mDriveResourceClient.getMetadata(file)
+            .continueWithTask(new Continuation<Metadata, Task<DriveContents>>() {
+                @Override
+                public Task<DriveContents> then(@NonNull Task<Metadata> task) {
+                    if (task.isSuccessful()) {
+                        mMetadata = task.getResult();
+                        return mDriveResourceClient.openFile(file, DriveFile.MODE_READ_ONLY);
+                    } else {
+                        return Tasks.forException(task.getException());
+                    }
+                }
+            }).addOnSuccessListener(new OnSuccessListener<DriveContents>() {
+                @Override
+                public void onSuccess(DriveContents driveContents) {
+                    mDriveContents = driveContents;
+                    refreshUiFromCurrentFile();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "Unable to retrieve file metadata and contents.", e);
+                }
+            });
     }
 
     /**
-     * Saves meta data and content changes.
+     * Saves metadata and content changes.
      */
     private void save() {
         Log.d(TAG, "Saving...");
+
         if (mCurrentDriveId == null) {
             return;
         }
-        new EditDriveFileAsyncTask(mGoogleApiClient) {
+
+        new EditDriveFileAsyncTask(mDriveResourceClient) {
             @Override
             public Changes edit(DriveContents driveContents) {
                 MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
-                        .setTitle(mTitleEditText.getText().toString()).build();
+                        .setTitle(mTitleEditText.getText().toString())
+                        .build();
                 try {
                     byte[] body = mContentsEditText.getText().toString().getBytes();
                     driveContents.getOutputStream().write(body);
@@ -252,21 +236,125 @@ public class HomeActivity extends BaseDriveActivity {
             }
 
             @Override
-            protected void onPostExecute(com.google.android.gms.common.api.Status status) {
-                if (!status.getStatus().isSuccess()) {
+            protected void onPostExecute(Boolean isSuccess) {
+                if (isSuccess) {
+                    showToast(R.string.msg_saved);
+                } else {
                     showToast(R.string.msg_errsaving);
-                    return;
                 }
-                showToast(R.string.msg_saved);
             }
         }.execute(mCurrentDriveId);
     }
 
     /**
-     * Shows a toast with the given message.
+     * Shows a {@link Toast} with the given message.
      */
     private void showToast(int id) {
         Toast.makeText(this, id, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Launches an {@link Intent} to create a new Drive file.
+     */
+    private void createDriveFile() {
+        Log.i(TAG, "Create drive file.");
+
+        if (!isSignedIn()) {
+            Log.w(TAG, "Failed to create file, user is not signed in.");
+            return;
+        }
+
+        // Nullify the previous DriveContents and Metadata
+        mDriveContents = null;
+        mMetadata = null;
+
+        // Build the DriveContents and start a CreateFileActivityIntent.
+        mDriveResourceClient.createContents()
+            .continueWithTask(new Continuation<DriveContents, Task<IntentSender>>() {
+                @Override
+                public Task<IntentSender> then(@NonNull Task<DriveContents> task) {
+                    if (!task.isSuccessful()) {
+                        return Tasks.forException(task.getException());
+                    }
+                    Log.i(TAG, "New contents created.");
+                    // Build file metadata options.
+                    MetadataChangeSet metadataChangeSet =
+                        new MetadataChangeSet.Builder()
+                            .setMimeType(MIME_TYPE_TEXT)
+                            .build();
+                    // Build file creation options.
+                    CreateFileActivityOptions createFileActivityOptions =
+                        new CreateFileActivityOptions.Builder()
+                            .setInitialMetadata(metadataChangeSet)
+                            .setInitialDriveContents(task.getResult())
+                            .build();
+                    // Build CreateFileActivityIntent.
+                    return mDriveClient.newCreateFileActivityIntentSender(createFileActivityOptions);
+                }
+            }).addOnSuccessListener(new OnSuccessListener<IntentSender>() {
+                  @Override
+                  public void onSuccess(IntentSender intentSender) {
+                      Log.i(TAG, "New CreateActivityIntent created.");
+                      try {
+                          // Start CreateFileActivityIntent
+                          startIntentSenderForResult(
+                              intentSender,
+                              REQUEST_CODE_CREATOR,
+                              /* fillInIntent= */ null,
+                              /* flagsMask= */ 0,
+                              /* flagsValues= */ 0,
+                              /* extraFlags= */ 0);
+                      } catch (SendIntentException e) {
+                          Log.e(TAG, "Failed to launch file chooser.", e);
+                      }
+                  }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "Failed to create file.", e);
+                }
+            });
+    }
+
+    /**
+     * Launches an {@link Intent} to open an existing Drive file.
+     */
+    private void openDriveFile() {
+        Log.i(TAG, "Open Drive file.");
+
+        if (!isSignedIn()) {
+            Log.w(TAG, "Failed to open file, user is not signed in.");
+            return;
+        }
+
+        // Build activity options.
+        final OpenFileActivityOptions openFileActivityOptions =
+            new OpenFileActivityOptions.Builder()
+                .setMimeType(Collections.singletonList(MIME_TYPE_TEXT))
+                .build();
+
+        // Start a OpenFileActivityIntent
+        mDriveClient.newOpenFileActivityIntentSender(openFileActivityOptions)
+            .addOnSuccessListener(new OnSuccessListener<IntentSender>() {
+                @Override
+                public void onSuccess(IntentSender intentSender) {
+                    try {
+                        startIntentSenderForResult(
+                            intentSender,
+                            REQUEST_CODE_OPENER,
+                            /* fillInIntent= */ null,
+                            /* flagsMask= */ 0,
+                            /* flagsValues= */ 0,
+                            /* extraFlags= */ 0);
+                    } catch (SendIntentException e) {
+                        Log.w(TAG, "Unable to send intent.", e);
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "Unable to create OpenFileActivityIntent.", e);
+                }
+            });
+    }
 }
