@@ -23,7 +23,6 @@ import com.google.android.gms.drive.DriveClient;
 import com.google.android.gms.drive.DriveResourceClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -101,8 +100,8 @@ public abstract class BaseDriveActivity extends Activity {
             // Called after user is signed in.
             if (resultCode == RESULT_OK) {
                 Log.i(TAG, "Signed in successfully.");
-                // Execute task to get sign-in account.
-                createDriveClientsFromSignInIntent(data);
+                // Create Drive clients now that account has been authorized access.
+                createDriveClients(GoogleSignIn.getLastSignedInAccount(this));
             } else {
                 Log.w(TAG, String.format("Unable to sign in, result code %d", resultCode));
             }
@@ -110,7 +109,10 @@ public abstract class BaseDriveActivity extends Activity {
     }
 
     public boolean isSignedIn() {
-        return mGoogleSignInClient != null && mGoogleSignInClient.getLastSignedInAccount() != null;
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        return mGoogleSignInClient != null
+                && (signInAccount != null
+                && signInAccount.getGrantedScopes().contains(Drive.SCOPE_FILE));
     }
 
     /**
@@ -145,19 +147,6 @@ public abstract class BaseDriveActivity extends Activity {
                 .requestScopes(Drive.SCOPE_FILE)
                 .build();
         return GoogleSignIn.getClient(this, signInOptions);
-    }
-
-    /**
-     * Executes a task to call {@link BaseDriveActivity#createDriveClients(GoogleSignInAccount)} on
-     *  sign-in success or log the exception on failure.
-     */
-    private void createDriveClientsFromSignInIntent(Intent signInIntent) {
-        Task<GoogleSignInAccount> task = GoogleSignInClient.getGoogleSignInAccountFromIntent(signInIntent);
-        if (task.isSuccessful()) {
-            createDriveClients(task.getResult());
-        } else {
-            Log.w(TAG, "Unable to build sign-in client", task.getException());
-        }
     }
 
     /**
