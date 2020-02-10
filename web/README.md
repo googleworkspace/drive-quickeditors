@@ -7,8 +7,6 @@ A sample text editor for the web browsers illustrating how to open and save file
 This is a simple text editor built with [AngularJS](https://www.angularjs.org),
 and the [Google Drive API](https://developers.google.com/drive/web).
 
-You can try out the app on its [live instance](https://gsuitedevs.github.io/drive-quickeditors/).
-
 ## Installation and Configuration
 
 The project can run on any static web server.
