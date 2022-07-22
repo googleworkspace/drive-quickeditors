@@ -3,8 +3,6 @@
 **Project site** <https://github.com/google/gtm-oauth2><br>
 **Discussion group** <http://groups.google.com/group/gtm-oauth2>
 
-[![Build Status](https://travis-ci.org/google/gtm-oauth2.svg?branch=main)](https://travis-ci.org/google/gtm-oauth2)
-
 The Google Toolbox for Mac OAuth 2 Controllers make it easy for Cocoa
 applications to sign in to services using OAuth 2 for authentication and
 authorization.
